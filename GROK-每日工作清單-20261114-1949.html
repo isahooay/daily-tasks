@@ -148,9 +148,8 @@ li.task.done .task-title{text-decoration:line-through;color:var(--sub)}
 .task-title{font-size:1.06rem;margin:0;word-break:break-word;color:var(--ink)}
 .task-meta{margin:6px 0;display:flex;flex-wrap:wrap;gap:6px 8px;font-size:.9rem;align-items:center}
 .badge{display:inline-block;border:1px solid currentColor;border-radius:999px;padding:0 9px;line-height:1.65;background:var(--badge-bg)}
-.pri-high{color:var(--hi);font-weight:700;box-shadow:0 0 10px rgba(255,123,147,.45);text-shadow:0 0 6px rgba(255,123,147,.6)}
-.pri-mid{color:var(--mid);box-shadow:0 0 10px rgba(255,211,107,.35);text-shadow:0 0 6px rgba(255,211,107,.5)}
-.pri-low{color:var(--lo);box-shadow:0 0 10px rgba(109,255,180,.3);text-shadow:0 0 6px rgba(109,255,180,.45)}
+.flag-imp{color:var(--hi);font-weight:700;box-shadow:0 0 10px rgba(255,123,147,.45);text-shadow:0 0 6px rgba(255,123,147,.6)}
+.flag-urg{color:var(--mid);font-weight:700;box-shadow:0 0 10px rgba(255,211,107,.35);text-shadow:0 0 6px rgba(255,211,107,.5)}
 .due{color:var(--sub)}
 .cd-over{color:var(--over);font-weight:700;text-shadow:0 0 8px rgba(255,128,128,.65);animation:pulse 2.4s ease-in-out infinite}
 .cd-today{color:var(--today);font-weight:700;text-shadow:0 0 8px rgba(255,191,102,.6)}
@@ -255,7 +254,7 @@ html[data-theme="metal"] .card h2{text-shadow:none;letter-spacing:.04em}
 html[data-theme="metal"] .card h2::after{content:"";flex:1;height:1px;margin-left:10px;background:linear-gradient(90deg,var(--accent),transparent)}
 html[data-theme="metal"] .card h2 .count{order:3;margin-left:8px}
 html[data-theme="metal"] #todayLine{filter:none}
-html[data-theme="metal"] .pri-high,html[data-theme="metal"] .pri-mid,html[data-theme="metal"] .pri-low{box-shadow:none;text-shadow:none}
+html[data-theme="metal"] .flag-imp,html[data-theme="metal"] .flag-urg{box-shadow:none;text-shadow:none}
 html[data-theme="metal"] .cd-today,html[data-theme="metal"] .cd-left,html[data-theme="metal"] .cd-done,html[data-theme="metal"] .rec,html[data-theme="metal"] .err{text-shadow:none}
 html[data-theme="metal"] .pin{text-shadow:0 0 6px rgba(230,195,106,.45)}
 html[data-theme="metal"] .cd-over{text-shadow:none;animation:none}
@@ -268,7 +267,7 @@ html[data-theme="pastel"] #todayLine{filter:none}
 html[data-theme="pastel"] button:not(nav.bottom button):not(.cal-day){border-radius:999px;border-width:2px}
 html[data-theme="pastel"] .card h2{justify-content:flex-start}
 html[data-theme="pastel"] .card h2 .count{margin-left:auto}
-html[data-theme="pastel"] .pri-high,html[data-theme="pastel"] .pri-mid,html[data-theme="pastel"] .pri-low,html[data-theme="pastel"] .cd-over,html[data-theme="pastel"] .cd-today,html[data-theme="pastel"] .cd-left,html[data-theme="pastel"] .cd-done,html[data-theme="pastel"] .pin,html[data-theme="pastel"] .rec,html[data-theme="pastel"] .err,html[data-theme="pastel"] nav.bottom button[aria-current="page"]{text-shadow:none;box-shadow:none}
+html[data-theme="pastel"] .flag-imp,html[data-theme="pastel"] .flag-urg,html[data-theme="pastel"] .cd-over,html[data-theme="pastel"] .cd-today,html[data-theme="pastel"] .cd-left,html[data-theme="pastel"] .cd-done,html[data-theme="pastel"] .pin,html[data-theme="pastel"] .rec,html[data-theme="pastel"] .err,html[data-theme="pastel"] nav.bottom button[aria-current="page"]{text-shadow:none;box-shadow:none}
 html[data-theme="pastel"] nav.bottom button[aria-current="page"]{box-shadow:inset 0 3px 0 var(--accent)}
 html[data-theme="pastel"] .cd-over{animation:wiggle 3s ease-in-out infinite;display:inline-block}
 @keyframes wiggle{0%,90%,100%{transform:none}93%{transform:rotate(-4deg)}96%{transform:rotate(4deg)}}
@@ -289,12 +288,12 @@ html[data-theme="washi"] .card h2 .count{margin-left:auto}
 html[data-theme="washi"] #todayLine{filter:none;font-family:var(--font-head)}
 html[data-theme="washi"] button:not(nav.bottom button){border-radius:4px}
 html[data-theme="washi"] .badge{border-radius:3px}
-html[data-theme="washi"] .pri-high,html[data-theme="washi"] .pri-mid,html[data-theme="washi"] .pri-low,html[data-theme="washi"] .cd-over,html[data-theme="washi"] .cd-today,html[data-theme="washi"] .cd-left,html[data-theme="washi"] .cd-done,html[data-theme="washi"] .pin,html[data-theme="washi"] .rec,html[data-theme="washi"] .err,html[data-theme="washi"] nav.bottom button[aria-current="page"]{text-shadow:none;box-shadow:none}
+html[data-theme="washi"] .flag-imp,html[data-theme="washi"] .flag-urg,html[data-theme="washi"] .cd-over,html[data-theme="washi"] .cd-today,html[data-theme="washi"] .cd-left,html[data-theme="washi"] .cd-done,html[data-theme="washi"] .pin,html[data-theme="washi"] .rec,html[data-theme="washi"] .err,html[data-theme="washi"] nav.bottom button[aria-current="page"]{text-shadow:none;box-shadow:none}
 html[data-theme="washi"] nav.bottom button[aria-current="page"]{box-shadow:inset 0 3px 0 #a83a2a}
 html[data-theme="washi"] .cd-over{animation:none}
 html[data-theme="washi"] dialog,html[data-theme="washi"] .card{-webkit-backdrop-filter:none;backdrop-filter:none}
 html[data-theme="washi"] dialog{border-radius:6px}
-/* ===== fix4：首頁（週條＋分組）、月曆頁（事件清單＋四象限）===== */
+/* ===== fix4：首頁（週條＋分組）、月曆頁（事件清單＋重點優先順序）===== */
 .week-card .wk-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
 .week-card .wk-head h2{margin:0;font-size:1.3rem}
 .wk-month{color:var(--sub);font-size:.92rem;font-weight:600}
@@ -484,9 +483,9 @@ html[data-theme="washi"] .wk-day{border-radius:4px}
     </article>
     </div>
     <article class="card" id="quadCard">
-      <h2>四象限 <span class="count" id="quadCount"></span></h2>
+      <h2>重點優先順序 <span class="count" id="quadCount"></span></h2>
       <div class="quads" id="quads"></div>
-      <p class="hint">「重要」「緊急」在新增／編輯任務時勾選。沒勾緊急的任務，到了今天或逾期也會自動算緊急；舊任務沒設定重要時，優先順序「高」算重要。</p>
+      <p class="hint">「重要」「緊急」在新增／編輯任務時勾選。沒勾緊急的任務，到了今天或逾期也會自動算緊急。</p>
     </article>
    </div>
   </section>
@@ -535,21 +534,21 @@ html[data-theme="washi"] .wk-day{border-radius:4px}
     <article class="card">
       <h2>說明</h2>
       <ul class="hint">
-        <li>排序：置頂優先，再依優先順序（高→中→低），再依到期日（早→晚）。</li>
+        <li>排序：置頂 → 重要且緊急 → 重要 → 緊急 → 其他；同一層再依到期日（早→晚），同一天「整天」排在有時間的前面，再依時間（早→晚）。</li>
         <li>「今天該做」＝今天到期的未完成任務；「未完成（含逾期）」＝其他未完成任務，逾期的排在同順序中。</li>
         <li>每月固定日期：用到期日的「日」。遇到沒有那一天的月份（例如 31 日遇到 4 月、29～31 日遇到 2 月），改到那個月最後一天；下個月有那一天就回到原本的日子。</li>
         <li>每隔 N 天：從這次的到期日往後算 N 天（1～365）。</li>
         <li>每週固定星期幾：從這次的到期日往後找下一個勾選的星期幾。</li>
         <li>重複任務按「完成」後，會自動產生下一次。刪除只刪這一次，之後不會再產生。</li>
-        <li>首頁：上方一週日期條可點選切換日期；下面分成「需要關注（逾期、置頂、優先高）」「整天」「早上（12 點前）」「下午（12～18 點）」「晚上（18 點後）」，點組名可收合，會記住。「現在」線只在選今天時出現。</li>
-        <li>月曆頁四象限：重要＝有勾「重要」（舊任務沒設定時，優先順序高算重要）；緊急＝有勾「緊急」，或今天到期、已逾期。</li>
+        <li>首頁：上方一週日期條可點選切換日期；下面分成「需要關注（逾期、置頂、重要且緊急）」「整天」「早上（12 點前）」「下午（12～18 點）」「晚上（18 點後）」，點組名可收合，會記住。「現在」線只在選今天時出現。</li>
+        <li>月曆頁重點優先順序：重要＝有勾「重要」；緊急＝有勾「緊急」，或今天到期、已逾期。</li>
         <li>.ics 是單向匯出到 Google 日曆：在 Google 日曆網頁版「設定 → 匯入與匯出 → 匯入」選檔案。之後在這裡修改不會自動更新到日曆。</li>
       </ul>
     </article>
   </section>
 
   <footer class="sig">
-    <p>作者：帥｜修改日期 2026-11-15 01:33</p>
+    <p>作者：帥｜修改日期 2026-11-15 03:28</p>
     <p>製作日期 2026-11-14 19:49｜GROK 輔助</p>
   </footer>
 </main>
@@ -570,21 +569,11 @@ html[data-theme="washi"] .wk-day{border-radius:4px}
       <p class="hint" id="titleCount">0 / 60 字</p>
       <p class="err" id="eTitle" role="alert"></p>
     </div>
-    <div class="row2">
-      <div class="field">
-        <label for="fDue">到期日</label>
-        <input type="date" id="fDue" min="2000-01-01" max="2100-12-31" aria-describedby="dueHint">
-        <p class="hint sm" id="dueHint">可選 2000-01-01～2100-12-31</p>
-        <p class="err" id="eDue" role="alert"></p>
-      </div>
-      <div class="field">
-        <label for="fPri">優先順序</label>
-        <select id="fPri">
-          <option value="high">高</option>
-          <option value="mid" selected>中</option>
-          <option value="low">低</option>
-        </select>
-      </div>
+    <div class="field">
+      <label for="fDue">到期日</label>
+      <input type="date" id="fDue" min="2000-01-01" max="2100-12-31" aria-describedby="dueHint">
+      <p class="hint sm" id="dueHint">可選 2000-01-01～2100-12-31</p>
+      <p class="err" id="eDue" role="alert"></p>
     </div>
     <div class="field">
       <label for="fTime">時間（選填）</label>
@@ -599,7 +588,7 @@ html[data-theme="washi"] .wk-day{border-radius:4px}
       <p class="err" id="eTime" role="alert"></p>
     </div>
     <fieldset class="field">
-      <legend>標記（重要、緊急用於四象限）</legend>
+      <legend>標記（重要、緊急用於重點優先順序）</legend>
       <div class="chk-row">
         <label class="chk"><input type="checkbox" id="fImp"> 重要</label>
         <label class="chk"><input type="checkbox" id="fUrg"> 緊急</label>
@@ -669,9 +658,6 @@ const Core = (() => {
   const FORMAT_VERSION = 1;
   const TITLE_MAX = 60, NOTE_MAX = 200, INT_MIN = 1, INT_MAX = 365;
   const DATE_MIN = '2000-01-01', DATE_MAX = '2100-12-31';
-  const PRI = { high: 0, mid: 1, low: 2 };
-  const PRI_LABEL = { high: '高', mid: '中', low: '低' };
-  const PRI_ICON = { high: '▲', mid: '●', low: '▽' };
   const WD = ['日', '一', '二', '三', '四', '五', '六'];
   const ICS_WD = ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA'];
   const pad = (n) => String(n).padStart(2, '0');
@@ -725,41 +711,52 @@ const Core = (() => {
     return '';
   }
 
-  function compare(a, b) {
+  /* fix6 排序：置頂 > 重要且緊急 > 重要 > 緊急 > 其他；同層依到期日，再依時間（整天排在有時間的前面），再依建立時間 */
+  const QRANK = { iu: 0, i: 1, u: 2, n: 3 };
+  function compare(a, b, td) {
+    td = td || todayStr();
     if (!!a.pinned !== !!b.pinned) return a.pinned ? -1 : 1;
-    if (PRI[a.priority] !== PRI[b.priority]) return PRI[a.priority] - PRI[b.priority];
+    const ra = QRANK[quadrant(a, td)], rb = QRANK[quadrant(b, td)];
+    if (ra !== rb) return ra - rb;
     if (a.due !== b.due) return a.due < b.due ? -1 : 1;
     const ta = validTime(a.time) ? a.time : '', tb = validTime(b.time) ? b.time : '';
     if (ta !== tb) return ta < tb ? -1 : 1;
     return (a.createdAt || '') < (b.createdAt || '') ? -1 : (a.createdAt || '') > (b.createdAt || '') ? 1 : 0;
   }
-  function sortTasks(list) { return list.slice().sort(compare); }
+  function sortTasks(list, td) { td = td || todayStr(); return list.slice().sort((a, b) => compare(a, b, td)); }
 
   function charLen(s) { return Array.from(s).length; }
 
-  /* ===== fix4：時間、分組、四象限 ===== */
+  /* ===== fix4：時間、分組、重點優先順序 ===== */
   function validTime(s) { return typeof s === 'string' && /^([01]\d|2[0-3]):[0-5]\d$/.test(s); }
   function period(time) { if (!validTime(time)) return 'allday'; if (time < '12:00') return 'morning'; if (time < '18:00') return 'afternoon'; return 'evening'; }
-  /* 舊資料沒有 important 欄位：優先順序「高」視為重要 */
+  /* 舊資料相容：沒有 important 欄位時，舊的 priority=high 視為重要（中／低忽略） */
   function isImportant(t) { return typeof t.important === 'boolean' ? t.important : t.priority === 'high'; }
+  /* 載入／匯入時套用：補上 important、移除舊的 priority 欄位（之後不再寫入） */
+  function normalizeTask(t) {
+    const o = Object.assign({}, t);
+    if (typeof o.important !== 'boolean') o.important = o.priority === 'high';
+    delete o.priority;
+    return o;
+  }
   /* 緊急：有勾緊急，或未完成且今天到期／逾期（只用於顯示，不寫回資料） */
   function isUrgent(t, td) { return t.urgent === true || (!t.done && t.due <= td); }
   function quadrant(t, td) { const i = isImportant(t), u = isUrgent(t, td); return i && u ? 'iu' : i ? 'i' : u ? 'u' : 'n'; }
-  function byTime(a, b) {
+  function byTime(a, b, td) {
     const ta = validTime(a.time) ? a.time : '', tb = validTime(b.time) ? b.time : '';
     if (ta !== tb) return ta < tb ? -1 : 1;
-    return compare(a, b);
+    return compare(a, b, td);
   }
-  /* 首頁某一天的分組：需要關注（選今天時含逾期；當天置頂／優先高的未完成）、整天、早上、下午、晚上 */
+  /* 首頁某一天的分組：需要關注（選今天時含逾期；當天置頂／重要且緊急的未完成）、整天、早上、下午、晚上 */
   function agendaGroups(tasks, day, td) {
     const g = { focus: [], allday: [], morning: [], afternoon: [], evening: [] };
     tasks.forEach((t) => {
-      const focus = !t.done && ((day === td && t.due < td) || (t.due === day && (t.pinned || t.priority === 'high')));
+      const focus = !t.done && ((day === td && t.due < td) || (t.due === day && (t.pinned || quadrant(t, td) === 'iu')));
       if (focus) g.focus.push(t);
       else if (t.due === day) g[period(t.time)].push(t);
     });
-    g.focus = g.focus.slice().sort(compare);
-    ['allday', 'morning', 'afternoon', 'evening'].forEach((k) => { g[k] = g[k].slice().sort(byTime); });
+    g.focus = g.focus.slice().sort((a, b) => compare(a, b, td));
+    ['allday', 'morning', 'afternoon', 'evening'].forEach((k) => { g[k] = g[k].slice().sort((a, b) => byTime(a, b, td)); });
     return g;
   }
   function dueLabel(due, td) {
@@ -787,8 +784,6 @@ const Core = (() => {
     if (!due) errors.due = '請選擇到期日';
     else if (!parseYmd(due)) errors.due = '日期不存在，請重新選擇';
     else if (due < DATE_MIN || due > DATE_MAX) errors.due = '日期要在 2000-01-01～2100-12-31 之間';
-    const priority = PRI_LABEL[inp.priority] ? inp.priority : null;
-    if (!priority) errors.priority = '優先順序只能是 高／中／低';
     const note = String(inp.note == null ? '' : inp.note);
     if (charLen(note) > NOTE_MAX) errors.note = '備註太長：目前 ' + charLen(note) + ' 字，最多 200 字';
     let recur = null;
@@ -813,7 +808,7 @@ const Core = (() => {
     let time = null;
     if (tRaw) { if (!validTime(tRaw)) errors.time = '時間不正確，要在 00:00～23:59 之間，或留空白＝整天'; else time = tRaw; }
     const ok = Object.keys(errors).length === 0;
-    return { ok, errors, value: ok ? { title, due, priority, note, recur, pinned: !!inp.pinned, exportIcs: !!inp.exportIcs, time, important: !!inp.important, urgent: !!inp.urgent } : null };
+    return { ok, errors, value: ok ? { title, due, note, recur, pinned: !!inp.pinned, exportIcs: !!inp.exportIcs, time, important: !!inp.important, urgent: !!inp.urgent } : null };
   }
 
   function validRecur(r) {
@@ -827,7 +822,7 @@ const Core = (() => {
   function validTask(t) {
     return t && typeof t === 'object' && typeof t.id === 'string' && t.id.length > 0 && t.id.length <= 80 &&
       typeof t.title === 'string' && charLen(t.title.trim()) >= 1 && charLen(t.title) <= TITLE_MAX &&
-      isValidDate(t.due) && !!PRI_LABEL[t.priority] &&
+      isValidDate(t.due) &&
       typeof t.pinned === 'boolean' && typeof t.exportIcs === 'boolean' && typeof t.done === 'boolean' &&
       typeof (t.note == null ? '' : t.note) === 'string' && charLen(t.note || '') <= NOTE_MAX && validRecur(t.recur === undefined ? null : t.recur) &&
       (t.time === undefined || t.time === null || validTime(t.time)) &&
@@ -842,7 +837,7 @@ const Core = (() => {
   function makeTask(v, now) {
     const iso = (now || new Date()).toISOString();
     const id = newId();
-    return { id, seriesId: id, title: v.title, due: v.due, priority: v.priority, pinned: v.pinned, exportIcs: v.exportIcs,
+    return { id, seriesId: id, title: v.title, due: v.due, pinned: v.pinned, exportIcs: v.exportIcs,
       note: v.note, recur: v.recur, time: validTime(v.time) ? v.time : null, important: !!v.important, urgent: !!v.urgent,
       done: false, doneAt: null, nextId: null, createdAt: iso, updatedAt: iso };
   }
@@ -910,10 +905,13 @@ const Core = (() => {
     const L = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//GROK//每日工作清單//ZH-TW', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', 'X-WR-CALNAME:每日工作清單'];
     const st = stamp(now);
     for (const t of list) {
-      const desc = '優先順序：' + PRI_LABEL[t.priority] + (validTime(t.time) ? '\n時間：' + t.time : '') + (t.recur ? '\n重複：' + recurText(t.recur) : '') + (t.note ? '\n備註：' + t.note : '');
+      const flags = [isImportant(t) ? '重要' : '', t.urgent === true ? '緊急' : ''].filter(Boolean);
+      const desc = [flags.length ? '標記：' + flags.join('、') : '', validTime(t.time) ? '時間：' + t.time : '', t.recur ? '重複：' + recurText(t.recur) : '', t.note ? '備註：' + t.note : ''].filter(Boolean).join('\n');
       L.push('BEGIN:VEVENT', 'UID:' + t.id + '@daily-tasks.grok', 'DTSTAMP:' + st,
         'DTSTART;VALUE=DATE:' + t.due.replace(/-/g, ''), 'DTEND;VALUE=DATE:' + addDays(t.due, 1).replace(/-/g, ''),
-        'SUMMARY:' + icsEscape(t.title), 'DESCRIPTION:' + icsEscape(desc), 'TRANSP:TRANSPARENT');
+        'SUMMARY:' + icsEscape(t.title));
+      if (desc) L.push('DESCRIPTION:' + icsEscape(desc));
+      L.push('TRANSP:TRANSPARENT');
       const rr = rrule(t.recur);
       if (rr) L.push('RRULE:' + rr);
       L.push('END:VEVENT');
@@ -976,6 +974,7 @@ const Core = (() => {
     const h = await sha256(JSON.stringify(obj.tasks));
     if (h !== obj.tasksSha256) return { ok: false, error: '備份檔校驗碼不符，檔案可能被改過或損壞' };
     if (obj.settings != null && typeof obj.settings !== 'object') return { ok: false, error: '備份檔設定資料不正確' };
+    obj.tasks = obj.tasks.map(normalizeTask); /* 校驗通過後才轉換舊欄位 */
     return { ok: true, backup: obj };
   }
   function merge(existing, incoming) {
@@ -984,9 +983,9 @@ const Core = (() => {
     return { tasks: existing.concat(add), added: add.length, skipped: incoming.length - add.length };
   }
 
-  return { APP_ID, FORMAT_VERSION, TITLE_MAX, PRI_LABEL, PRI_ICON, WD, ymd, parseYmd, isValidDate, lastDay, addDays, diffDays, weekday, todayStr, fmtDate, fmtShort,
+  return { APP_ID, FORMAT_VERSION, TITLE_MAX, WD, ymd, parseYmd, isValidDate, lastDay, addDays, diffDays, weekday, todayStr, fmtDate, fmtShort,
     countdown, nextDue, monthlyDay, sha256js, recurText, sortTasks, validateInput, validTask, makeTask, complete, uncomplete, icsEscape, fold, rrule, buildIcs,
-    sha256, counts, makeBackup, parseBackup, merge, charLen, validTime, period, isImportant, isUrgent, quadrant, agendaGroups, dueLabel, byTime };
+    sha256, counts, makeBackup, parseBackup, merge, charLen, validTime, period, isImportant, isUrgent, quadrant, agendaGroups, dueLabel, byTime, normalizeTask, compare };
 })();
 window.DTCore = Core;
 
@@ -999,7 +998,7 @@ function load() {
     const raw = localStorage.getItem(KEY);
     if (!raw) return { tasks: [], settings: Object.assign({}, DEFAULT_SETTINGS) };
     const o = JSON.parse(raw);
-    return { tasks: Array.isArray(o.tasks) ? o.tasks.filter(Core.validTask) : [], settings: Object.assign({}, DEFAULT_SETTINGS, o.settings || {}) };
+    return { tasks: Array.isArray(o.tasks) ? o.tasks.filter(Core.validTask).map(Core.normalizeTask) : [], settings: Object.assign({}, DEFAULT_SETTINGS, o.settings || {}) };
   } catch (e) {
     return { tasks: [], settings: Object.assign({}, DEFAULT_SETTINGS) };
   }
@@ -1018,6 +1017,11 @@ const today = () => Core.todayStr(new Date());
 function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
 function btn(text, act, extra) { const b = el('button', extra || '', text); b.type = 'button'; b.dataset.act = act; return b; }
 
+/* fix6：重要／緊急標記徽章（取代舊的優先順序徽章） */
+function flagBadges(box, t, td) {
+  if (Core.isImportant(t)) box.appendChild(el('span', 'badge flag-imp', '★ 重要'));
+  if (!t.done && Core.isUrgent(t, td)) box.appendChild(el('span', 'badge flag-urg', '⚡ 緊急'));
+}
 function renderTask(t, td) {
   const li = el('li', 'task' + (t.done ? ' done' : '') + (t.pinned ? ' pinned' : ''));
   li.dataset.id = t.id;
@@ -1026,7 +1030,7 @@ function renderTask(t, td) {
   h.appendChild(document.createTextNode(t.title));
   li.appendChild(h);
   const meta = el('p', 'task-meta');
-  meta.appendChild(el('span', 'badge pri-' + t.priority, Core.PRI_ICON[t.priority] + ' ' + Core.PRI_LABEL[t.priority]));
+  flagBadges(meta, t, td);
   meta.appendChild(el('span', 'due', '到期 ' + Core.fmtShort(t.due) + (Core.validTime(t.time) ? ' ' + t.time : '')));
   if (t.done) meta.appendChild(el('span', 'cd cd-done', '✔ 已完成'));
   else {
@@ -1063,7 +1067,7 @@ function fill(listId, emptyId, items, td) {
 function render() {
   const td = today();
   $('todayLine').textContent = Core.fmtDate(td);
-  const open = Core.sortTasks(state.tasks.filter((t) => !t.done));
+  const open = Core.sortTasks(state.tasks.filter((t) => !t.done), td);
   const dueToday = open.filter((t) => t.due === td);
   const others = open.filter((t) => t.due !== td);
   fill('listToday', 'emptyToday', dueToday, td);
@@ -1111,7 +1115,7 @@ function renderCal(td) {
     g.appendChild(b);
   }
   $('calDayTitle').textContent = calSel ? Core.fmtDate(calSel) + ' 的任務' : '請點一天';
-  const dayItems = calSel ? Core.sortTasks(state.tasks.filter((t) => t.due === calSel)) : [];
+  const dayItems = calSel ? Core.sortTasks(state.tasks.filter((t) => t.due === calSel), td) : [];
   fill('listDay', 'emptyDay', dayItems, td);
 }
 
@@ -1159,14 +1163,12 @@ function openForm(id) {
   $('taskDlgTitle').textContent = t ? '編輯任務' : '新增任務';
   $('fTitle').value = t ? t.title : '';
   $('fDue').value = t ? t.due : today();
-  $('fPri').value = t ? t.priority : 'mid';
   $('fPin').checked = t ? t.pinned : false;
   $('fIcs').checked = t ? t.exportIcs : false;
   $('fTime').value = t && Core.validTime(t.time) ? t.time : '';
   syncTimeUi();
   $('fImp').checked = t ? Core.isImportant(t) : false;
   $('fUrg').checked = t ? t.urgent === true : false;
-  impTouched = !!t;
   $('fNote').value = t ? (t.note || '') : '';
   $('fRecur').value = t && t.recur ? t.recur.type : 'none';
   $('fInterval').value = t && t.recur && t.recur.type === 'interval' ? t.recur.n : 7;
@@ -1176,7 +1178,7 @@ function openForm(id) {
   $('fTitle').focus();
 }
 function readForm() {
-  return { title: $('fTitle').value, due: $('fDue').value, priority: $('fPri').value, pinned: $('fPin').checked, exportIcs: $('fIcs').checked,
+  return { title: $('fTitle').value, due: $('fDue').value, pinned: $('fPin').checked, exportIcs: $('fIcs').checked,
     time: $('fTime').value, important: $('fImp').checked, urgent: $('fUrg').checked,
     note: $('fNote').value, recurType: $('fRecur').value, interval: $('fInterval').value, prevMonthDay: editingMonthDay,
     weekdays: Array.from(document.querySelectorAll('#wdBox input:checked')).map((c) => +c.value) };
@@ -1251,14 +1253,14 @@ function uncompleteTask(t) {
   state.tasks = r.tasks; save(); render();
 }
 
-/* ===== fix4：首頁週條＋分組、接下來的事件、四象限 ===== */
+/* ===== fix4：首頁週條＋分組、接下來的事件、重點優先順序 ===== */
 const KEY_FOLD = 'GROK_每日工作清單_收合_v1';
 const GROUPS = [
   { k: 'focus', name: '需要關注', ico: '❗' }, { k: 'allday', name: '整天', ico: '📅' }, { k: 'morning', name: '早上', ico: '🌅' },
   { k: 'afternoon', name: '下午', ico: '☀️' }, { k: 'evening', name: '晚上', ico: '🌙' }
 ];
 const QUADS = [{ k: 'iu', name: '重要且緊急', ico: '🔥' }, { k: 'i', name: '重要', ico: '📅' }, { k: 'u', name: '緊急', ico: '⚡' }, { k: 'n', name: '以後再說', ico: '☰' }];
-let homeSel = null, impTouched = false;
+let homeSel = null;
 function loadFold() {
   const r = {}; let o = {};
   try { o = JSON.parse(localStorage.getItem(KEY_FOLD) || '{}') || {}; } catch (e) { o = {}; }
@@ -1297,10 +1299,12 @@ function renderAgItem(t, td) {
   li.dataset.id = t.id;
   const p = Core.parseYmd(t.due);
   li.appendChild(el('span', 'ag-when', over ? p.m + '月' + p.d + '日' : (Core.validTime(t.time) ? t.time : '整天')));
-  li.appendChild(hidden(el('span', 'ag-ico', over ? '⏰' : t.pinned ? '📌' : t.priority === 'high' ? '🔥' : t.recur ? '🔁' : '📝')));
+  li.appendChild(hidden(el('span', 'ag-ico', over ? '⏰' : t.pinned ? '📌' : Core.isImportant(t) ? '★' : t.recur ? '🔁' : '📝')));
   const body = el('div', 'ag-body');
   body.appendChild(el('p', 'ag-title', t.title));
-  const sub = [t.done ? '✔ 已完成' : Core.countdown(t.due, td).text, Core.PRI_ICON[t.priority] + ' 優先' + Core.PRI_LABEL[t.priority]];
+  const sub = [t.done ? '✔ 已完成' : Core.countdown(t.due, td).text];
+  if (Core.isImportant(t)) sub.push('★ 重要');
+  if (!t.done && Core.isUrgent(t, td)) sub.push('⚡ 緊急');
   if (t.pinned) sub.push('📌 置頂');
   if (t.recur) sub.push('🔁 ' + Core.recurText(t.recur));
   body.appendChild(el('p', 'ag-sub', sub.join(' · ')));
@@ -1350,7 +1354,7 @@ function insertNowLine(box, secs) {
   box.appendChild(makeNowLine('div', hm));
 }
 function renderUpcoming(td) {
-  const list = state.tasks.filter((t) => !t.done && t.due >= td).sort((a, b) => a.due !== b.due ? (a.due < b.due ? -1 : 1) : Core.byTime(a, b)).slice(0, 10);
+  const list = state.tasks.filter((t) => !t.done && t.due >= td).sort((a, b) => a.due !== b.due ? (a.due < b.due ? -1 : 1) : Core.byTime(a, b, td)).slice(0, 10);
   const ul = $('upList'); ul.textContent = '';
   list.forEach((t) => {
     const li = el('li'); const b = el('button', 'ev-btn' + (t.due === td ? ' is-due' : '')); b.type = 'button'; b.dataset.date = t.due; b.dataset.id = t.id;
@@ -1362,7 +1366,7 @@ function renderUpcoming(td) {
 }
 function renderQuads(td) {
   const box = $('quads'); box.textContent = '';
-  const open = Core.sortTasks(state.tasks.filter((t) => !t.done));
+  const open = Core.sortTasks(state.tasks.filter((t) => !t.done), td);
   QUADS.forEach((Q) => {
     const items = open.filter((t) => Core.quadrant(t, td) === Q.k);
     const sec = el('section', 'quad quad-' + Q.k); sec.dataset.quad = Q.k;
@@ -1408,7 +1412,7 @@ function shiftWeek(n) {
 /* ===== 提醒 ===== */
 function remindItems() {
   const td = today();
-  return Core.sortTasks(state.tasks.filter((t) => !t.done && t.due <= td));
+  return Core.sortTasks(state.tasks.filter((t) => !t.done && t.due <= td), td);
 }
 function showReminder() {
   const items = remindItems();
@@ -1422,7 +1426,7 @@ function showReminder() {
     const li = el('li', 'task');
     li.appendChild(el('h3', 'task-title', t.title));
     const m = el('p', 'task-meta');
-    m.appendChild(el('span', 'badge pri-' + t.priority, Core.PRI_ICON[t.priority] + ' ' + Core.PRI_LABEL[t.priority]));
+    flagBadges(m, t, td);
     m.appendChild(el('span', 'cd cd-' + c.kind, (c.kind === 'over' ? '⚠ ' : '⏰ ') + c.text));
     li.appendChild(m); ul.appendChild(li);
   });
@@ -1508,7 +1512,7 @@ function undoImport() {
   const raw = localStorage.getItem(KEY_UNDO); if (!raw) return;
   let u; try { u = JSON.parse(raw); } catch (e) { alert('保留的資料損壞，無法復原'); return; }
   if (!confirm('確定要復原到取代前的 ' + u.tasks.length + ' 筆資料嗎？目前的資料會被換掉。')) return;
-  state.tasks = u.tasks.filter(Core.validTask); applySettings(u.settings); save(); localStorage.removeItem(KEY_UNDO);
+  state.tasks = u.tasks.filter(Core.validTask).map(Core.normalizeTask); applySettings(u.settings); save(); localStorage.removeItem(KEY_UNDO);
   finishImport('✔ 已復原到取代前的資料，共 ' + state.tasks.length + ' 筆。', true); render();
 }
 
@@ -1545,7 +1549,7 @@ function init() {
   $('fOpen').addEventListener('click', () => { allFilter = 'open'; render(); });
   $('fDone').addEventListener('click', () => { allFilter = 'done'; render(); });
   $('icsAllBtn').addEventListener('click', () => {
-    const list = Core.sortTasks(state.tasks.filter((t) => !t.done && t.exportIcs));
+    const list = Core.sortTasks(state.tasks.filter((t) => !t.done && t.exportIcs), today());
     const m = $('icsMsg');
     if (!list.length) { m.className = 'msg bad'; m.textContent = '✖ 沒有勾選「匯出到日曆」的未完成任務'; return; }
     download('每日工作清單-日曆-' + stampName() + '.ics', Core.buildIcs(list, new Date()), 'text/calendar;charset=utf-8');
@@ -1561,8 +1565,6 @@ function init() {
   $('agenda').addEventListener('click', onAgenda);
   $('quads').addEventListener('click', onQuads);
   $('upList').addEventListener('click', (e) => { const b = e.target.closest('button.ev-btn'); if (!b) return; const p = Core.parseYmd(b.dataset.date); calY = p.y; calM = p.m; calSel = b.dataset.date; render(); $('calDayCard').scrollIntoView({ block: 'start' }); });
-  $('fPri').addEventListener('change', () => { if (!impTouched) $('fImp').checked = $('fPri').value === 'high'; });
-  $('fImp').addEventListener('change', () => { impTouched = true; });
   $('fTime').addEventListener('input', syncTimeUi);
   $('fTime').addEventListener('change', syncTimeUi);
   $('fTimeClear').addEventListener('click', () => { $('fTime').value = ''; $('eTime').textContent = ''; syncTimeUi(); });
