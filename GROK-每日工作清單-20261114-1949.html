@@ -205,7 +205,7 @@ ul.hint li{margin:4px 0}
 .sw-washi{background:linear-gradient(135deg,#f4eddc 0 55%,#1f3f66 55% 80%,#a83a2a 80%)}
 input[type=file]{color:var(--sub);max-width:100%}
 input[type=file]::file-selector-button{font:inherit;border:1px solid var(--accent);background:var(--chip-bg);color:var(--ink);border-radius:10px;padding:6px 10px;margin-right:8px}
-dialog{border:1px solid var(--line);border-radius:20px;padding:0;width:min(560px,94vw);max-height:90vh;color:var(--ink);background:var(--dlg-bg);-webkit-backdrop-filter:blur(22px) saturate(160%);backdrop-filter:blur(22px) saturate(160%);box-shadow:var(--dlg-shadow)}
+dialog{border:1px solid var(--line);border-radius:20px;padding:0;width:min(560px,94vw);max-height:90vh;max-height:calc(100dvh - 24px);overflow:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;color:var(--ink);background:var(--dlg-bg);-webkit-backdrop-filter:blur(22px) saturate(160%);backdrop-filter:blur(22px) saturate(160%);box-shadow:var(--dlg-shadow)}
 dialog[open]{animation:pop .22s ease-out}
 @keyframes pop{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
 dialog::backdrop{background:var(--backdrop);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
@@ -213,11 +213,31 @@ dialog::backdrop{background:var(--backdrop);-webkit-backdrop-filter:blur(4px);ba
 .dlg h2{margin:0 0 8px;font-size:1.15rem;color:var(--accent);text-shadow:0 0 10px var(--accent-glow)}
 .field{display:flex;flex-direction:column;gap:4px;margin:10px 0;border:0;padding:0}
 fieldset.field legend{padding:0;margin-bottom:4px}
-.field input[type=text],.field input[type=date],.field input[type=number],.field select,.field textarea{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:12px;background:var(--field-bg);color:var(--ink);min-height:42px;transition:border-color .2s,box-shadow .2s}
+.field input[type=text],.field input[type=date],.field input[type=time],.field input[type=number],.field select,.field textarea{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:12px;background:var(--field-bg);color:var(--ink);min-height:42px;transition:border-color .2s,box-shadow .2s}
 .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent);box-shadow:0 0 12px var(--accent-glow)}
 .field select option{background:var(--opt-bg);color:var(--ink)}
 .field textarea{min-height:70px}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.row2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;align-items:start}
+/* fix5：表單欄位統一（iOS 原生日期／時間欄位跟其他欄位同寬、同高、同背景、同邊框，文字靠左） */
+.field input[type=text],.field input[type=date],.field input[type=time],.field input[type=number]{height:44px;min-height:44px}
+.field select{min-height:44px}
+.field input[type=date],.field input[type=time]{-webkit-appearance:none;appearance:none;display:block;min-width:0;max-width:100%;text-align:left;line-height:1.3}
+.field input[type=date]::-webkit-date-and-time-value,.field input[type=time]::-webkit-date-and-time-value{text-align:left;margin:0;min-height:1.3em}
+.field input[type=date]::-webkit-datetime-edit,.field input[type=time]::-webkit-datetime-edit{padding:0}
+.field input[type=date]::-webkit-calendar-picker-indicator,.field input[type=time]::-webkit-calendar-picker-indicator{margin-left:auto;cursor:pointer}
+.field .hint.sm{font-size:.82rem}
+.time-row{display:flex;gap:8px;align-items:center}
+.time-box{position:relative;flex:1;min-width:0}
+.time-ph{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--sub);pointer-events:none;font-size:.95rem;white-space:nowrap}
+.time-in.is-empty::-webkit-date-and-time-value{color:transparent}
+.time-in.is-empty:not(:focus){color:transparent}
+.time-in.is-empty:not(:focus)::-webkit-datetime-edit,.time-in.is-empty:not(:focus)::-webkit-datetime-edit-fields-wrapper,.time-in.is-empty:not(:focus)::-webkit-datetime-edit-hour-field,.time-in.is-empty:not(:focus)::-webkit-datetime-edit-minute-field,.time-in.is-empty:not(:focus)::-webkit-datetime-edit-ampm-field,.time-in.is-empty:not(:focus)::-webkit-datetime-edit-text{color:transparent;background:transparent}
+.time-box:focus-within .time-ph{display:none}
+.time-row button{flex:none;min-height:44px;white-space:nowrap}
+.chk-row{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center}
+.chk-row .chk{min-height:40px}
+#taskForm .dlg-actions{position:sticky;bottom:0;z-index:2;margin:12px -18px -16px;padding:10px 18px calc(12px + env(safe-area-inset-bottom));background:var(--dlg-solid);border-top:1px solid var(--line)}
+@media (max-width:767px){.row2{grid-template-columns:minmax(0,1fr);gap:0}}
 .wds{display:flex;flex-wrap:wrap;gap:6px}
 .wds label{border:1px solid var(--line);border-radius:10px;padding:4px 8px;display:inline-flex;gap:4px;align-items:center;background:var(--chip-bg)}
 .wds input{accent-color:var(--accent)}
@@ -529,7 +549,7 @@ html[data-theme="washi"] .wk-day{border-radius:4px}
   </section>
 
   <footer class="sig">
-    <p>作者：帥｜修改日期 2026-11-15 00:44</p>
+    <p>作者：帥｜修改日期 2026-11-15 01:33</p>
     <p>製作日期 2026-11-14 19:49｜GROK 輔助</p>
   </footer>
 </main>
@@ -552,8 +572,9 @@ html[data-theme="washi"] .wk-day{border-radius:4px}
     </div>
     <div class="row2">
       <div class="field">
-        <label for="fDue">到期日（2000-01-01～2100-12-31）</label>
-        <input type="date" id="fDue" min="2000-01-01" max="2100-12-31">
+        <label for="fDue">到期日</label>
+        <input type="date" id="fDue" min="2000-01-01" max="2100-12-31" aria-describedby="dueHint">
+        <p class="hint sm" id="dueHint">可選 2000-01-01～2100-12-31</p>
         <p class="err" id="eDue" role="alert"></p>
       </div>
       <div class="field">
@@ -565,22 +586,27 @@ html[data-theme="washi"] .wk-day{border-radius:4px}
         </select>
       </div>
     </div>
-    <div class="row2">
-      <div class="field">
-        <label for="fTime">時間（可空白＝整天）</label>
-        <input type="time" id="fTime" step="60">
-        <p class="err" id="eTime" role="alert"></p>
+    <div class="field">
+      <label for="fTime">時間（選填）</label>
+      <div class="time-row">
+        <div class="time-box">
+          <input type="time" id="fTime" class="time-in is-empty" step="60" aria-describedby="timeHint">
+          <span class="time-ph" id="timePh" aria-hidden="true">整天（沒有設定時間）</span>
+        </div>
+        <button type="button" id="fTimeClear" disabled>清除時間</button>
       </div>
-      <fieldset class="field">
-        <legend>四象限</legend>
+      <p class="hint sm" id="timeHint">空白＝整天。iPhone 的時間選擇器不能清空，要改回整天請按「清除時間」。</p>
+      <p class="err" id="eTime" role="alert"></p>
+    </div>
+    <fieldset class="field">
+      <legend>標記（重要、緊急用於四象限）</legend>
+      <div class="chk-row">
         <label class="chk"><input type="checkbox" id="fImp"> 重要</label>
         <label class="chk"><input type="checkbox" id="fUrg"> 緊急</label>
-      </fieldset>
-    </div>
-    <div class="field">
-      <label class="chk"><input type="checkbox" id="fPin"> 置頂</label>
-      <label class="chk"><input type="checkbox" id="fIcs"> 要匯出到 Google 日曆（.ics）</label>
-    </div>
+        <label class="chk"><input type="checkbox" id="fPin"> 置頂</label>
+        <label class="chk"><input type="checkbox" id="fIcs"> 要匯出到 Google 日曆（.ics）</label>
+      </div>
+    </fieldset>
     <div class="field">
       <label for="fRecur">重複</label>
       <select id="fRecur">
@@ -1116,6 +1142,13 @@ function syncRecurUi() {
   const day = p ? Core.monthlyDay($('fDue').value, editingMonthDay) : null;
   mh.textContent = p ? '每月 ' + day + ' 日' + (day !== p.d ? '（這個月沒有 ' + day + ' 日，所以這次是 ' + p.d + ' 日）' : '') + (day >= 29 ? '。沒有 ' + day + ' 日的月份會改到月底最後一天，下個月有就回到 ' + day + ' 日。' : '。') : '請先選到期日，會用到期日的「日」每月重複。';
 }
+/* fix5：時間空白＝整天；空白時顯示提示、停用「清除時間」 */
+function syncTimeUi() {
+  const empty = !$('fTime').value;
+  $('fTime').classList.toggle('is-empty', empty);
+  $('timePh').hidden = !empty;
+  $('fTimeClear').disabled = empty;
+}
 function updateTitleCount() { const n = Core.charLen($('fTitle').value.trim()); $('titleCount').textContent = n + ' / 60 字'; }
 function clearErrors() { ['eTitle', 'eDue', 'eTime', 'eInterval', 'eWeekly', 'eNote'].forEach((id) => { $(id).textContent = ''; }); }
 function openForm(id) {
@@ -1130,6 +1163,7 @@ function openForm(id) {
   $('fPin').checked = t ? t.pinned : false;
   $('fIcs').checked = t ? t.exportIcs : false;
   $('fTime').value = t && Core.validTime(t.time) ? t.time : '';
+  syncTimeUi();
   $('fImp').checked = t ? Core.isImportant(t) : false;
   $('fUrg').checked = t ? t.urgent === true : false;
   impTouched = !!t;
@@ -1529,6 +1563,9 @@ function init() {
   $('upList').addEventListener('click', (e) => { const b = e.target.closest('button.ev-btn'); if (!b) return; const p = Core.parseYmd(b.dataset.date); calY = p.y; calM = p.m; calSel = b.dataset.date; render(); $('calDayCard').scrollIntoView({ block: 'start' }); });
   $('fPri').addEventListener('change', () => { if (!impTouched) $('fImp').checked = $('fPri').value === 'high'; });
   $('fImp').addEventListener('change', () => { impTouched = true; });
+  $('fTime').addEventListener('input', syncTimeUi);
+  $('fTime').addEventListener('change', syncTimeUi);
+  $('fTimeClear').addEventListener('click', () => { $('fTime').value = ''; $('eTime').textContent = ''; syncTimeUi(); });
   $('calGrid').addEventListener('click', (e) => { const b = e.target.closest('button.cal-day'); if (!b) return; calSel = b.dataset.date; render(); });
   $('setPopup').addEventListener('change', () => { state.settings.popupOnOpen = $('setPopup').checked; save(); render(); });
   $('setNotify').addEventListener('change', async () => {
