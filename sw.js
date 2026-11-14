@@ -1,6 +1,6 @@
-/* 每日工作清單 service worker｜作者：帥｜GROK 輔助｜製作日期 2026-11-14 19:49｜修改日期 2026-11-14 20:35 */
+/* 每日工作清單 service worker｜作者：帥｜GROK 輔助｜製作日期 2026-11-14 19:49｜修改日期 2026-11-14 21:03 */
 'use strict';
-const CACHE = 'daily-tasks-20261114-1949-fix2';
+const CACHE = 'daily-tasks-20261114-1949-fix3';
 const APP = './GROK-每日工作清單-20261114-1949.html';
 const FILES = [APP, './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 
