@@ -39,7 +39,7 @@
   --dlg-bg:rgba(22,18,52,.82);--dlg-solid:#191537;--dlg-shadow:0 20px 60px rgba(0,0,0,.55),0 0 30px rgba(157,140,255,.3);--backdrop:rgba(5,4,20,.6);
   --field-bg:rgba(6,6,24,.55);--opt-bg:#15122f;--chip-bg:rgba(255,255,255,.05);--badge-bg:rgba(0,0,0,.25);
   --btn-bg:rgba(255,255,255,.06);--btn-ink:#f3f5ff;
-  --accent:#3fe9ff;--accent-glow:rgba(63,233,255,.45);
+  --accent:#3fe9ff;--accent-glow:rgba(63,233,255,.45);--accent-ink:#06101f;
   --p1:#3fe9ff;--p2:#9d8cff;--p-ink:#06101f;--p-glow:0 0 14px rgba(63,233,255,.45),0 0 28px rgba(157,140,255,.25);--p-glow-h:0 0 18px rgba(63,233,255,.7),0 0 36px rgba(157,140,255,.45);
   --a1:#ff6ad5;--a2:#9d8cff;--a-ink:#120622;--a-glow:0 0 14px rgba(255,106,213,.5),0 0 30px rgba(157,140,255,.3);--a-glow-h:0 0 20px rgba(255,106,213,.8),0 0 40px rgba(157,140,255,.5);
   --hi:#ffb6c3;--mid:#ffd36b;--lo:#6dffb4;--over:#ffb8b8;--today:#ffbf66;--left:#bfccff;--ok:#6dffb4;--pin:#ffbdf2;--rec:#d3ccff;--focus:#ffd36b;
@@ -59,7 +59,7 @@ html[data-theme="metal"]{
   --dlg-bg:linear-gradient(160deg,#2a2c31,#1b1c20);--dlg-solid:#202125;--dlg-shadow:0 20px 60px rgba(0,0,0,.7),0 0 0 1px rgba(230,195,106,.25);--backdrop:rgba(0,0,0,.65);
   --field-bg:#141518;--opt-bg:#1b1c20;--chip-bg:rgba(255,255,255,.04);--badge-bg:rgba(0,0,0,.35);
   --btn-bg:linear-gradient(180deg,#34363d,#25272c);--btn-ink:#f4f0e6;
-  --accent:#e6c36a;--accent-glow:rgba(230,195,106,.4);
+  --accent:#e6c36a;--accent-glow:rgba(230,195,106,.4);--accent-ink:#1a1306;
   --p1:#f6dd94;--p2:#c9a24a;--p-ink:#1a1306;--p-glow:0 0 10px rgba(230,195,106,.35);--p-glow-h:0 0 16px rgba(230,195,106,.6);
   --a1:#f6dd94;--a2:#b8892f;--a-ink:#1a1306;--a-glow:0 0 12px rgba(230,195,106,.4);--a-glow-h:0 0 18px rgba(230,195,106,.65);
   --hi:#ffa494;--mid:#f0c75e;--lo:#9fe3b4;--over:#ffa494;--today:#ffc870;--left:#bcc8da;--ok:#9fe3b4;--pin:#f0d48a;--rec:#d6cbb0;--focus:#f0d48a;
@@ -78,7 +78,7 @@ html[data-theme="pastel"]{
   --dlg-bg:#fffafd;--dlg-solid:#fffafd;--dlg-shadow:0 16px 40px rgba(140,77,156,.25);--backdrop:rgba(90,60,110,.35);
   --field-bg:#ffffff;--opt-bg:#ffffff;--chip-bg:#fff4fa;--badge-bg:#ffffff;
   --btn-bg:#ffffff;--btn-ink:#3a2747;
-  --accent:#8a3f97;--accent-glow:rgba(243,166,203,.55);
+  --accent:#8a3f97;--accent-glow:rgba(243,166,203,.55);--accent-ink:#ffffff;
   --p1:#ffc2dc;--p2:#cdbdff;--p-ink:#3a1240;--p-glow:0 4px 0 #e9a8c8;--p-glow-h:0 6px 0 #e9a8c8;
   --a1:#ffffff;--a2:#ffe6f2;--a-ink:#7a2a76;--a-glow:0 4px 0 rgba(58,18,64,.35);--a-glow-h:0 6px 0 rgba(58,18,64,.35);
   --hi:#b8234d;--mid:#7d5200;--lo:#1d6f45;--over:#b8234d;--today:#8f4600;--left:#43509e;--ok:#1d6f45;--pin:#a2257f;--rec:#6640a8;--focus:#a2257f;
@@ -97,7 +97,7 @@ html[data-theme="washi"]{
   --dlg-bg:#fffaf0;--dlg-solid:#fffaf0;--dlg-shadow:0 14px 40px rgba(60,45,25,.28);--backdrop:rgba(40,30,20,.4);
   --field-bg:#ffffff;--opt-bg:#ffffff;--chip-bg:#f8f1e1;--badge-bg:#fffaf0;
   --btn-bg:#fbf6ea;--btn-ink:#2a2017;
-  --accent:#1f3f66;--accent-glow:rgba(31,63,102,.25);
+  --accent:#1f3f66;--accent-glow:rgba(31,63,102,.25);--accent-ink:#fbf6ea;
   --p1:#1f3f66;--p2:#1f3f66;--p-ink:#fbf6ea;--p-glow:0 2px 0 #142a45;--p-glow-h:0 3px 0 #142a45;
   --a1:#a83a2a;--a2:#a83a2a;--a-ink:#ffffff;--a-glow:0 2px 0 #6e2419;--a-glow-h:0 3px 0 #6e2419;
   --hi:#a3291c;--mid:#7a5200;--lo:#2f6b3a;--over:#a3291c;--today:#8a4600;--left:#3d5a80;--ok:#2f6b3a;--pin:#8e2648;--rec:#5b4a8a;--focus:#a83a2a;
@@ -126,8 +126,8 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 .wrap{max-width:960px;margin:0 auto;padding:12px 14px;position:relative;z-index:1}
 header.top{padding:calc(12px + env(safe-area-inset-top)) 14px 14px;background:var(--hdr-bg);border-bottom:1px solid var(--line);-webkit-backdrop-filter:blur(14px) saturate(140%);backdrop-filter:blur(14px) saturate(140%);position:relative;z-index:1}
 header.top .wrap{padding:0;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
-header.top h1{font-size:1.05rem;margin:0;color:var(--hdr-title);letter-spacing:.08em;font-weight:600}
-#todayLine{margin:2px 0 0;font-size:1.35rem;font-weight:800;color:var(--hdr-ink);background:linear-gradient(90deg,var(--hdr-ink),var(--hdr-ink2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 8px var(--accent-glow))}
+header.top h1{font-size:1.9rem;margin:0;color:var(--hdr-title);letter-spacing:.06em;font-weight:800;line-height:1.25}
+#todayLine{margin:2px 0 0;font-size:1.05rem;font-weight:800;color:var(--hdr-ink);background:linear-gradient(90deg,var(--hdr-ink),var(--hdr-ink2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 8px var(--accent-glow))}
 #addBtn{background:linear-gradient(135deg,var(--a1),var(--a2));color:var(--a-ink);border-color:transparent;font-weight:800;box-shadow:var(--a-glow)}
 #addBtn:hover{box-shadow:var(--a-glow-h)}
 .cards{display:grid;grid-template-columns:1fr;gap:16px}
@@ -175,12 +175,15 @@ nav.bottom button[aria-current="page"]{color:var(--accent);font-weight:700;text-
 .cal-wd{text-align:center;font-size:.85rem;color:var(--sub)}
 .cal-day{min-height:50px;padding:4px 2px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:2px;border-radius:10px;background:var(--chip-bg)}
 .cal-day.other{visibility:hidden}
-.cal-day.is-today{border:2px solid var(--accent);font-weight:700;box-shadow:0 0 12px var(--accent-glow)}
+.cal-day.is-today{font-weight:700}
+.cal-d{display:inline-flex;align-items:center;justify-content:center;min-width:1.9em;height:1.9em;border-radius:50%}
+.cal-day.is-today .cal-d{background:var(--accent);color:var(--accent-ink);box-shadow:0 0 12px var(--accent-glow)}
 .cal-day[aria-pressed="true"]{background:linear-gradient(135deg,var(--a1),var(--a2));color:var(--a-ink);border-color:transparent;font-weight:700;box-shadow:var(--a-glow)}
-.cal-n{font-size:.75rem;line-height:1.2;color:var(--accent)}
-.cal-day[aria-pressed="true"] .cal-n{color:var(--a-ink)}
+.cal-n{display:block;width:7px;height:7px;border-radius:50%;background:var(--accent);font-size:.75rem;line-height:1.2;color:var(--accent)}
+.cal-day[aria-pressed="true"] .cal-n{color:var(--a-ink);background:var(--a-ink)}
 .cal-day.has-over .cal-n{color:var(--over)}
 .cal-day.has-over[aria-pressed="true"] .cal-n{color:var(--a-ink)}
+.cal-day.has-over .cal-n{width:auto;height:auto;background:none}
 .cal-day.has-over .cal-n::before{content:"⚠"}
 .set-row{display:flex;flex-direction:column;gap:6px;padding:10px 0;border-top:1px solid var(--line)}
 .set-row:first-of-type{border-top:0}
@@ -271,6 +274,87 @@ html[data-theme="washi"] nav.bottom button[aria-current="page"]{box-shadow:inset
 html[data-theme="washi"] .cd-over{animation:none}
 html[data-theme="washi"] dialog,html[data-theme="washi"] .card{-webkit-backdrop-filter:none;backdrop-filter:none}
 html[data-theme="washi"] dialog{border-radius:6px}
+/* ===== fix4：首頁（週條＋分組）、月曆頁（事件清單＋四象限）===== */
+.week-card .wk-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.week-card .wk-head h2{margin:0;font-size:1.3rem}
+.wk-month{color:var(--sub);font-size:.92rem;font-weight:600}
+.wk-nav{margin-left:auto;display:flex;gap:6px}
+.wk-nav button{min-height:38px;padding:4px 11px;font-size:.92rem}
+.week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;margin-bottom:4px}
+.wk-day{display:flex;flex-direction:column;align-items:center;gap:1px;padding:6px 0 5px;min-height:64px;border-radius:14px;background:none;border:1px solid transparent;box-shadow:none}
+.wk-day.other{visibility:hidden}
+.wk-wd{font-size:.78rem;color:var(--sub)}
+.wk-d{font-size:1.15rem;font-weight:700;color:var(--ink);line-height:1.3}
+.wk-dot{display:block;width:6px;height:6px;border-radius:50%;background:transparent}
+.wk-day.has-task .wk-dot{background:var(--accent)}
+.wk-day.has-over .wk-dot{background:var(--over)}
+.wk-day.is-today{border-color:var(--accent);background:var(--chip-bg)}
+.wk-day.is-today .wk-d,.wk-day.is-today .wk-wd{color:var(--accent)}
+.wk-day[aria-pressed="true"]{background:linear-gradient(135deg,var(--a1),var(--a2));border-color:transparent;box-shadow:var(--a-glow)}
+.wk-day[aria-pressed="true"] .wk-wd,.wk-day[aria-pressed="true"] .wk-d{color:var(--a-ink)}
+.wk-day[aria-pressed="true"].has-task .wk-dot{background:var(--a-ink)}
+.grp{margin-top:8px}
+.grp h3{margin:0}
+.grp-head{width:100%;display:flex;align-items:center;gap:8px;background:none;border:0;border-radius:10px;padding:6px 2px;min-height:44px;font-weight:800;font-size:1.08rem;color:var(--ink);text-align:left;box-shadow:none}
+.grp-ico{width:1.5em;text-align:center}
+.grp-n{display:inline-block;min-width:1.8em;padding:0 7px;border-radius:999px;background:var(--chip-bg);border:1px solid var(--line);font-size:.85rem;font-weight:700;text-align:center;color:var(--ink);line-height:1.6}
+.grp-chev{margin-left:auto;color:var(--sub);transition:transform .2s}
+.grp-head[aria-expanded="false"] .grp-chev{transform:rotate(180deg)}
+ul.agenda{list-style:none;margin:0;padding:0}
+.ag-item{display:grid;grid-template-columns:3.8em 1.7em minmax(0,1fr) auto auto;align-items:center;gap:6px;padding:10px 0;border-top:1px solid var(--line)}
+.ag-when{font-size:.84rem;color:var(--sub);font-weight:700;text-align:right;line-height:1.25;word-break:keep-all}
+.ag-ico{font-size:1.45rem;text-align:center;line-height:1}
+.ag-body{border-left:3px solid var(--accent);padding-left:10px;min-width:0}
+.ag-item.over .ag-body{border-left-color:var(--over)}
+.ag-item.pinned .ag-body{border-left-color:var(--pin)}
+.ag-title{margin:0;font-weight:700;color:var(--ink);word-break:break-word;overflow-wrap:anywhere}
+.ag-sub{margin:0;font-size:.86rem;color:var(--sub);word-break:break-word}
+.ag-item.done .ag-title{text-decoration:line-through;color:var(--sub)}
+.ag-chk,.q-chk{flex:none;padding:0;border-radius:50% !important;border:2px solid var(--accent);background:none;color:transparent;font-weight:900;line-height:1}
+.ag-chk{width:38px;height:38px;min-height:38px}
+.ag-chk[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.ag-go{width:30px;min-height:40px;padding:0;border:0;background:none;color:var(--sub);font-size:1.5rem;box-shadow:none}
+.ag-pad{width:30px}
+.now-line{display:flex;align-items:center;gap:8px;margin:8px 0;padding:6px 0;font-size:.84rem;font-weight:700;color:var(--accent);list-style:none}
+.now-line::after{content:"";flex:1;height:1px;background:var(--line)}
+.now-dot{flex:none;width:12px;height:12px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px var(--chip-bg)}
+.now-next{color:var(--sub);font-weight:600}
+.home-sub{font-size:1rem;color:var(--sub);margin:18px 2px 8px;font-weight:700}
+.cal-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+.cal-col{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;align-content:start}
+@media (min-width:768px){.cal-layout{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr)}}
+ul.events{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:minmax(0,1fr);gap:8px}
+.ev-btn{width:100%;text-align:left;display:block;border:0;border-left:4px solid var(--line);border-radius:4px !important;background:none;padding:4px 10px;box-shadow:none;min-height:44px}
+.ev-btn.is-due{border-left-color:var(--over)}
+.ev-title{display:block;font-weight:700;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ev-when{display:block;font-size:.88rem;color:var(--sub)}
+.quads{display:grid;grid-template-columns:minmax(0,1fr);gap:2px}
+.quad h3{display:flex;align-items:center;gap:8px;margin:8px 0 4px;font-size:1.08rem}
+.q-ico{width:1.4em;text-align:center}
+.q-n{margin-left:auto;font-weight:800}
+.quad-iu h3{color:var(--hi)}
+.quad-i h3{color:var(--left)}
+.quad-u h3{color:var(--mid)}
+.quad-n h3{color:var(--sub)}
+ul.qlist{list-style:none;margin:0 0 6px;padding:0}
+.q-item{display:flex;align-items:center;gap:10px;padding:2px 0}
+.q-chk{width:34px;height:34px;min-height:34px}
+.quad-iu .q-chk{border-color:var(--hi)}
+.quad-i .q-chk{border-color:var(--left)}
+.quad-u .q-chk{border-color:var(--mid)}
+.quad-n .q-chk{border-color:var(--sub)}
+.q-title{flex:1;min-width:0;text-align:left;border:0;background:none;padding:4px 0;min-height:40px;color:var(--ink);font-weight:600;box-shadow:none;word-break:break-word;overflow-wrap:anywhere}
+.q-due{flex:none;font-size:.85rem;color:var(--sub)}
+.q-due.is-due{color:var(--over);font-weight:700}
+.q-empty{color:var(--sub);font-size:.88rem;margin:0 0 6px 2px}
+@media (max-width:359px){.ag-item{grid-template-columns:3.8em minmax(0,1fr) auto auto}.ag-ico{display:none}.wk-nav{margin-left:0}}
+html[data-theme="metal"] .grp-n,html[data-theme="metal"] .now-line{text-shadow:none}
+html[data-theme="pastel"] .grp-head::before{content:"🐾";font-size:.8em}
+html[data-theme="pastel"] .ag-body{border-left-width:4px;border-radius:2px}
+html[data-theme="washi"] .grp-head{font-family:var(--font-head);letter-spacing:.05em}
+html[data-theme="washi"] .ag-body{border-left-color:#a83a2a}
+html[data-theme="washi"] .ag-item.over .ag-body{border-left-color:var(--over)}
+html[data-theme="washi"] .wk-day{border-radius:4px}
 /* 不支援毛玻璃時用實色 */
 @supports not ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){
   .card{background:var(--card-solid)}
@@ -312,6 +396,21 @@ html[data-theme="washi"] dialog{border-radius:6px}
 
 <main class="wrap">
   <section id="view-home" aria-label="首頁">
+    <article class="card week-card" id="agendaCard" aria-labelledby="weekTitle">
+      <div class="wk-head">
+        <h2 id="weekTitle">今天</h2>
+        <span class="wk-month" id="weekMonth"></span>
+        <div class="wk-nav">
+          <button type="button" id="wkPrev" aria-label="上一週">‹</button>
+          <button type="button" id="wkToday">今天</button>
+          <button type="button" id="wkNext" aria-label="下一週">›</button>
+        </div>
+      </div>
+      <div class="week" id="weekStrip" role="group" aria-label="選擇日期（日到六）"></div>
+      <div id="agenda"></div>
+      <p class="empty" id="emptyAgenda" hidden>這天沒有任務。</p>
+    </article>
+    <h2 class="home-sub">任務清單（可完成、置頂、編輯、刪除、匯出）</h2>
     <div class="cards">
       <article class="card" id="cardToday">
         <h2>今天該做 <span class="count" id="todayCount"></span></h2>
@@ -342,7 +441,9 @@ html[data-theme="washi"] dialog{border-radius:6px}
   </section>
 
   <section id="view-cal" aria-label="月曆" hidden>
-    <article class="card">
+   <div class="cal-layout">
+    <div class="cal-col">
+    <article class="card" id="calCard">
       <div class="cal-head">
         <button type="button" id="calPrev" aria-label="上個月">‹ 上月</button>
         <h2 id="calTitle">—</h2>
@@ -351,11 +452,23 @@ html[data-theme="washi"] dialog{border-radius:6px}
       <div class="seg"><button type="button" id="calToday">回到今天</button></div>
       <div class="cal-grid" id="calGrid"></div>
     </article>
+    <article class="card" id="upCard">
+      <h2>接下來的事件</h2>
+      <ul class="events" id="upList"></ul>
+      <p class="empty" id="emptyUp">接下來沒有未完成的任務。</p>
+    </article>
     <article class="card" id="calDayCard">
       <h2 id="calDayTitle">—</h2>
       <ul class="tasks" id="listDay"></ul>
       <p class="empty" id="emptyDay">這天沒有任務。</p>
     </article>
+    </div>
+    <article class="card" id="quadCard">
+      <h2>四象限 <span class="count" id="quadCount"></span></h2>
+      <div class="quads" id="quads"></div>
+      <p class="hint">「重要」「緊急」在新增／編輯任務時勾選。沒勾緊急的任務，到了今天或逾期也會自動算緊急；舊任務沒設定重要時，優先順序「高」算重要。</p>
+    </article>
+   </div>
   </section>
 
   <section id="view-settings" aria-label="設定" hidden>
@@ -408,13 +521,15 @@ html[data-theme="washi"] dialog{border-radius:6px}
         <li>每隔 N 天：從這次的到期日往後算 N 天（1～365）。</li>
         <li>每週固定星期幾：從這次的到期日往後找下一個勾選的星期幾。</li>
         <li>重複任務按「完成」後，會自動產生下一次。刪除只刪這一次，之後不會再產生。</li>
+        <li>首頁：上方一週日期條可點選切換日期；下面分成「需要關注（逾期、置頂、優先高）」「整天」「早上（12 點前）」「下午（12～18 點）」「晚上（18 點後）」，點組名可收合，會記住。「現在」線只在選今天時出現。</li>
+        <li>月曆頁四象限：重要＝有勾「重要」（舊任務沒設定時，優先順序高算重要）；緊急＝有勾「緊急」，或今天到期、已逾期。</li>
         <li>.ics 是單向匯出到 Google 日曆：在 Google 日曆網頁版「設定 → 匯入與匯出 → 匯入」選檔案。之後在這裡修改不會自動更新到日曆。</li>
       </ul>
     </article>
   </section>
 
   <footer class="sig">
-    <p>作者：帥｜修改日期 2026-11-14 21:03</p>
+    <p>作者：帥｜修改日期 2026-11-15 00:44</p>
     <p>製作日期 2026-11-14 19:49｜GROK 輔助</p>
   </footer>
 </main>
@@ -449,6 +564,18 @@ html[data-theme="washi"] dialog{border-radius:6px}
           <option value="low">低</option>
         </select>
       </div>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label for="fTime">時間（可空白＝整天）</label>
+        <input type="time" id="fTime" step="60">
+        <p class="err" id="eTime" role="alert"></p>
+      </div>
+      <fieldset class="field">
+        <legend>四象限</legend>
+        <label class="chk"><input type="checkbox" id="fImp"> 重要</label>
+        <label class="chk"><input type="checkbox" id="fUrg"> 緊急</label>
+      </fieldset>
     </div>
     <div class="field">
       <label class="chk"><input type="checkbox" id="fPin"> 置頂</label>
@@ -576,11 +703,46 @@ const Core = (() => {
     if (!!a.pinned !== !!b.pinned) return a.pinned ? -1 : 1;
     if (PRI[a.priority] !== PRI[b.priority]) return PRI[a.priority] - PRI[b.priority];
     if (a.due !== b.due) return a.due < b.due ? -1 : 1;
+    const ta = validTime(a.time) ? a.time : '', tb = validTime(b.time) ? b.time : '';
+    if (ta !== tb) return ta < tb ? -1 : 1;
     return (a.createdAt || '') < (b.createdAt || '') ? -1 : (a.createdAt || '') > (b.createdAt || '') ? 1 : 0;
   }
   function sortTasks(list) { return list.slice().sort(compare); }
 
   function charLen(s) { return Array.from(s).length; }
+
+  /* ===== fix4：時間、分組、四象限 ===== */
+  function validTime(s) { return typeof s === 'string' && /^([01]\d|2[0-3]):[0-5]\d$/.test(s); }
+  function period(time) { if (!validTime(time)) return 'allday'; if (time < '12:00') return 'morning'; if (time < '18:00') return 'afternoon'; return 'evening'; }
+  /* 舊資料沒有 important 欄位：優先順序「高」視為重要 */
+  function isImportant(t) { return typeof t.important === 'boolean' ? t.important : t.priority === 'high'; }
+  /* 緊急：有勾緊急，或未完成且今天到期／逾期（只用於顯示，不寫回資料） */
+  function isUrgent(t, td) { return t.urgent === true || (!t.done && t.due <= td); }
+  function quadrant(t, td) { const i = isImportant(t), u = isUrgent(t, td); return i && u ? 'iu' : i ? 'i' : u ? 'u' : 'n'; }
+  function byTime(a, b) {
+    const ta = validTime(a.time) ? a.time : '', tb = validTime(b.time) ? b.time : '';
+    if (ta !== tb) return ta < tb ? -1 : 1;
+    return compare(a, b);
+  }
+  /* 首頁某一天的分組：需要關注（選今天時含逾期；當天置頂／優先高的未完成）、整天、早上、下午、晚上 */
+  function agendaGroups(tasks, day, td) {
+    const g = { focus: [], allday: [], morning: [], afternoon: [], evening: [] };
+    tasks.forEach((t) => {
+      const focus = !t.done && ((day === td && t.due < td) || (t.due === day && (t.pinned || t.priority === 'high')));
+      if (focus) g.focus.push(t);
+      else if (t.due === day) g[period(t.time)].push(t);
+    });
+    g.focus = g.focus.slice().sort(compare);
+    ['allday', 'morning', 'afternoon', 'evening'].forEach((k) => { g[k] = g[k].slice().sort(byTime); });
+    return g;
+  }
+  function dueLabel(due, td) {
+    const n = diffDays(td, due);
+    if (n < 0) return { text: '逾期 ' + (-n) + ' 天', due: true };
+    if (n === 0) return { text: '今天', due: true };
+    if (n === 1) return { text: '明天', due: false };
+    const p = parseYmd(due); return { text: p.m + '/' + p.d, due: false };
+  }
 
   /* 每月重複日：編輯時若到期日仍是原本重複日的那一次（例如 31 日遇 30 天的月份＝30 日），保留原本的日；否則用到期日的日 */
   function monthlyDay(due, prevDay) {
@@ -620,8 +782,12 @@ const Core = (() => {
     } else if (rt === 'monthly') {
       if (!errors.due) recur = { type: 'monthly', day: monthlyDay(due, inp.prevMonthDay) };
     } else if (rt !== 'none') errors.recur = '重複設定不正確';
+    let tRaw = String(inp.time == null ? '' : inp.time).trim();
+    if (/^\d{2}:\d{2}:\d{2}$/.test(tRaw)) tRaw = tRaw.slice(0, 5);
+    let time = null;
+    if (tRaw) { if (!validTime(tRaw)) errors.time = '時間不正確，要在 00:00～23:59 之間，或留空白＝整天'; else time = tRaw; }
     const ok = Object.keys(errors).length === 0;
-    return { ok, errors, value: ok ? { title, due, priority, note, recur, pinned: !!inp.pinned, exportIcs: !!inp.exportIcs } : null };
+    return { ok, errors, value: ok ? { title, due, priority, note, recur, pinned: !!inp.pinned, exportIcs: !!inp.exportIcs, time, important: !!inp.important, urgent: !!inp.urgent } : null };
   }
 
   function validRecur(r) {
@@ -637,7 +803,9 @@ const Core = (() => {
       typeof t.title === 'string' && charLen(t.title.trim()) >= 1 && charLen(t.title) <= TITLE_MAX &&
       isValidDate(t.due) && !!PRI_LABEL[t.priority] &&
       typeof t.pinned === 'boolean' && typeof t.exportIcs === 'boolean' && typeof t.done === 'boolean' &&
-      typeof (t.note == null ? '' : t.note) === 'string' && charLen(t.note || '') <= NOTE_MAX && validRecur(t.recur === undefined ? null : t.recur);
+      typeof (t.note == null ? '' : t.note) === 'string' && charLen(t.note || '') <= NOTE_MAX && validRecur(t.recur === undefined ? null : t.recur) &&
+      (t.time === undefined || t.time === null || validTime(t.time)) &&
+      (t.important === undefined || typeof t.important === 'boolean') && (t.urgent === undefined || typeof t.urgent === 'boolean');
   }
 
   function newId() {
@@ -649,7 +817,8 @@ const Core = (() => {
     const iso = (now || new Date()).toISOString();
     const id = newId();
     return { id, seriesId: id, title: v.title, due: v.due, priority: v.priority, pinned: v.pinned, exportIcs: v.exportIcs,
-      note: v.note, recur: v.recur, done: false, doneAt: null, nextId: null, createdAt: iso, updatedAt: iso };
+      note: v.note, recur: v.recur, time: validTime(v.time) ? v.time : null, important: !!v.important, urgent: !!v.urgent,
+      done: false, doneAt: null, nextId: null, createdAt: iso, updatedAt: iso };
   }
 
   /* 完成：重複任務產生下一次 */
@@ -715,7 +884,7 @@ const Core = (() => {
     const L = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//GROK//每日工作清單//ZH-TW', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', 'X-WR-CALNAME:每日工作清單'];
     const st = stamp(now);
     for (const t of list) {
-      const desc = '優先順序：' + PRI_LABEL[t.priority] + (t.recur ? '\n重複：' + recurText(t.recur) : '') + (t.note ? '\n備註：' + t.note : '');
+      const desc = '優先順序：' + PRI_LABEL[t.priority] + (validTime(t.time) ? '\n時間：' + t.time : '') + (t.recur ? '\n重複：' + recurText(t.recur) : '') + (t.note ? '\n備註：' + t.note : '');
       L.push('BEGIN:VEVENT', 'UID:' + t.id + '@daily-tasks.grok', 'DTSTAMP:' + st,
         'DTSTART;VALUE=DATE:' + t.due.replace(/-/g, ''), 'DTEND;VALUE=DATE:' + addDays(t.due, 1).replace(/-/g, ''),
         'SUMMARY:' + icsEscape(t.title), 'DESCRIPTION:' + icsEscape(desc), 'TRANSP:TRANSPARENT');
@@ -791,7 +960,7 @@ const Core = (() => {
 
   return { APP_ID, FORMAT_VERSION, TITLE_MAX, PRI_LABEL, PRI_ICON, WD, ymd, parseYmd, isValidDate, lastDay, addDays, diffDays, weekday, todayStr, fmtDate, fmtShort,
     countdown, nextDue, monthlyDay, sha256js, recurText, sortTasks, validateInput, validTask, makeTask, complete, uncomplete, icsEscape, fold, rrule, buildIcs,
-    sha256, counts, makeBackup, parseBackup, merge, charLen };
+    sha256, counts, makeBackup, parseBackup, merge, charLen, validTime, period, isImportant, isUrgent, quadrant, agendaGroups, dueLabel, byTime };
 })();
 window.DTCore = Core;
 
@@ -832,7 +1001,7 @@ function renderTask(t, td) {
   li.appendChild(h);
   const meta = el('p', 'task-meta');
   meta.appendChild(el('span', 'badge pri-' + t.priority, Core.PRI_ICON[t.priority] + ' ' + Core.PRI_LABEL[t.priority]));
-  meta.appendChild(el('span', 'due', '到期 ' + Core.fmtShort(t.due)));
+  meta.appendChild(el('span', 'due', '到期 ' + Core.fmtShort(t.due) + (Core.validTime(t.time) ? ' ' + t.time : '')));
   if (t.done) meta.appendChild(el('span', 'cd cd-done', '✔ 已完成'));
   else {
     const c = Core.countdown(t.due, td);
@@ -881,6 +1050,9 @@ function render() {
   $('fOpen').setAttribute('aria-pressed', String(allFilter === 'open'));
   $('fDone').setAttribute('aria-pressed', String(allFilter === 'done'));
   renderCal(td);
+  renderHome(td);
+  renderUpcoming(td);
+  renderQuads(td);
   $('setPopup').checked = !!state.settings.popupOnOpen;
   $('setNotify').checked = !!state.settings.notify;
   $('lastBackup').textContent = state.settings.lastBackupAt ? '上次匯出備份：' + new Date(state.settings.lastBackupAt).toLocaleString('zh-TW', { hour12: false }) : '尚未匯出過備份。';
@@ -908,8 +1080,8 @@ function renderCal(td) {
     b.type = 'button'; b.dataset.date = ds;
     b.setAttribute('aria-pressed', String(ds === calSel));
     b.setAttribute('aria-label', calM + '月' + d + '日，' + items.length + ' 項任務' + (over ? '，有逾期' : ''));
-    b.appendChild(el('span', '', String(d)));
-    if (items.length) b.appendChild(el('span', 'cal-n', items.length + '項'));
+    b.appendChild(el('span', 'cal-d', String(d)));
+    if (items.length) { const dot = el('span', 'cal-n'); dot.setAttribute('aria-hidden', 'true'); b.appendChild(dot); }
     g.appendChild(b);
   }
   $('calDayTitle').textContent = calSel ? Core.fmtDate(calSel) + ' 的任務' : '請點一天';
@@ -945,7 +1117,7 @@ function syncRecurUi() {
   mh.textContent = p ? '每月 ' + day + ' 日' + (day !== p.d ? '（這個月沒有 ' + day + ' 日，所以這次是 ' + p.d + ' 日）' : '') + (day >= 29 ? '。沒有 ' + day + ' 日的月份會改到月底最後一天，下個月有就回到 ' + day + ' 日。' : '。') : '請先選到期日，會用到期日的「日」每月重複。';
 }
 function updateTitleCount() { const n = Core.charLen($('fTitle').value.trim()); $('titleCount').textContent = n + ' / 60 字'; }
-function clearErrors() { ['eTitle', 'eDue', 'eInterval', 'eWeekly', 'eNote'].forEach((id) => { $(id).textContent = ''; }); }
+function clearErrors() { ['eTitle', 'eDue', 'eTime', 'eInterval', 'eWeekly', 'eNote'].forEach((id) => { $(id).textContent = ''; }); }
 function openForm(id) {
   editingId = id || null;
   clearErrors();
@@ -957,6 +1129,10 @@ function openForm(id) {
   $('fPri').value = t ? t.priority : 'mid';
   $('fPin').checked = t ? t.pinned : false;
   $('fIcs').checked = t ? t.exportIcs : false;
+  $('fTime').value = t && Core.validTime(t.time) ? t.time : '';
+  $('fImp').checked = t ? Core.isImportant(t) : false;
+  $('fUrg').checked = t ? t.urgent === true : false;
+  impTouched = !!t;
   $('fNote').value = t ? (t.note || '') : '';
   $('fRecur').value = t && t.recur ? t.recur.type : 'none';
   $('fInterval').value = t && t.recur && t.recur.type === 'interval' ? t.recur.n : 7;
@@ -967,6 +1143,7 @@ function openForm(id) {
 }
 function readForm() {
   return { title: $('fTitle').value, due: $('fDue').value, priority: $('fPri').value, pinned: $('fPin').checked, exportIcs: $('fIcs').checked,
+    time: $('fTime').value, important: $('fImp').checked, urgent: $('fUrg').checked,
     note: $('fNote').value, recurType: $('fRecur').value, interval: $('fInterval').value, prevMonthDay: editingMonthDay,
     weekdays: Array.from(document.querySelectorAll('#wdBox input:checked')).map((c) => +c.value) };
 }
@@ -975,7 +1152,7 @@ function submitForm(e) {
   clearErrors();
   const r = Core.validateInput(readForm());
   if (!r.ok) {
-    const map = { title: 'eTitle', due: 'eDue', interval: 'eInterval', weekly: 'eWeekly', note: 'eNote' };
+    const map = { title: 'eTitle', due: 'eDue', time: 'eTime', interval: 'eInterval', weekly: 'eWeekly', note: 'eNote' };
     Object.keys(r.errors).forEach((k) => { if (map[k]) $(map[k]).textContent = r.errors[k]; });
     return;
   }
@@ -1010,15 +1187,9 @@ function onAction(e) {
   if (act === 'icsflag') { if (e.type !== 'change') return; state.tasks = state.tasks.map((x) => x.id === id ? Object.assign({}, x, { exportIcs: t0.checked, updatedAt: new Date().toISOString() }) : x); save(); render(); return; }
   if (e.type !== 'click') return;
   if (act === 'done') {
-    const nd = Core.nextDue(t);
-    if (nd && !Core.isValidDate(nd) && !confirm('「' + t.title + '」的下一次會是 ' + nd + '，超過可用日期（2000-01-01～2100-12-31），所以不會再產生下一次，這個重複任務到這次結束。\n仍要標記完成嗎？')) return;
-    const r = Core.complete(state.tasks, id, new Date());
-    state.tasks = r.tasks; save(); render();
-    if (r.next) toast('已完成，下一次：' + Core.fmtShort(r.next.due));
+    completeTask(t);
   } else if (act === 'undone') {
-    const r = Core.uncomplete(state.tasks, id, new Date());
-    if (!r.ok) { alert(r.reason); return; }
-    state.tasks = r.tasks; save(); render();
+    uncompleteTask(t);
   } else if (act === 'pin') {
     state.tasks = state.tasks.map((x) => x.id === id ? Object.assign({}, x, { pinned: !x.pinned, updatedAt: new Date().toISOString() }) : x); save(); render();
   } else if (act === 'edit') {
@@ -1031,6 +1202,174 @@ function onAction(e) {
   }
 }
 function toast(msg) { $('icsMsg').textContent = msg; }
+function completeTask(t) {
+  if (!t || t.done) return;
+  const nd = Core.nextDue(t);
+  if (nd && !Core.isValidDate(nd) && !confirm('「' + t.title + '」的下一次會是 ' + nd + '，超過可用日期（2000-01-01～2100-12-31），所以不會再產生下一次，這個重複任務到這次結束。\n仍要標記完成嗎？')) return;
+  const r = Core.complete(state.tasks, t.id, new Date());
+  state.tasks = r.tasks; save(); render();
+  if (r.next) toast('已完成，下一次：' + Core.fmtShort(r.next.due));
+}
+function uncompleteTask(t) {
+  if (!t || !t.done) return;
+  const r = Core.uncomplete(state.tasks, t.id, new Date());
+  if (!r.ok) { alert(r.reason); return; }
+  state.tasks = r.tasks; save(); render();
+}
+
+/* ===== fix4：首頁週條＋分組、接下來的事件、四象限 ===== */
+const KEY_FOLD = 'GROK_每日工作清單_收合_v1';
+const GROUPS = [
+  { k: 'focus', name: '需要關注', ico: '❗' }, { k: 'allday', name: '整天', ico: '📅' }, { k: 'morning', name: '早上', ico: '🌅' },
+  { k: 'afternoon', name: '下午', ico: '☀️' }, { k: 'evening', name: '晚上', ico: '🌙' }
+];
+const QUADS = [{ k: 'iu', name: '重要且緊急', ico: '🔥' }, { k: 'i', name: '重要', ico: '📅' }, { k: 'u', name: '緊急', ico: '⚡' }, { k: 'n', name: '以後再說', ico: '☰' }];
+let homeSel = null, impTouched = false;
+function loadFold() {
+  const r = {}; let o = {};
+  try { o = JSON.parse(localStorage.getItem(KEY_FOLD) || '{}') || {}; } catch (e) { o = {}; }
+  GROUPS.forEach((g) => { r[g.k] = o[g.k] === true; });
+  return r;
+}
+let fold = loadFold();
+function saveFold() { try { localStorage.setItem(KEY_FOLD, JSON.stringify(fold)); } catch (e) { /* 不能存就只在這次有效 */ } }
+function nowHM() { const d = new Date(); return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0'); }
+function hidden(e) { e.setAttribute('aria-hidden', 'true'); return e; }
+function renderHome(td) {
+  if (!homeSel || !Core.isValidDate(homeSel)) homeSel = td;
+  renderWeek(td); renderAgenda(td);
+}
+function renderWeek(td) {
+  const sel = homeSel, start = Core.addDays(sel, -Core.weekday(sel)), ps = Core.parseYmd(sel);
+  $('weekTitle').textContent = sel === td ? '今天' : Core.fmtShort(sel);
+  $('weekMonth').textContent = ps.y + '年' + ps.m + '月';
+  const box = $('weekStrip'); box.textContent = '';
+  for (let i = 0; i < 7; i++) {
+    const ds = Core.addDays(start, i);
+    if (!Core.isValidDate(ds)) { box.appendChild(hidden(el('div', 'wk-day other'))); continue; }
+    const items = state.tasks.filter((t) => t.due === ds);
+    const over = ds < td && items.some((t) => !t.done);
+    const b = el('button', 'wk-day' + (ds === td ? ' is-today' : '') + (items.length ? ' has-task' : '') + (over ? ' has-over' : ''));
+    b.type = 'button'; b.dataset.date = ds; b.setAttribute('aria-pressed', String(ds === sel));
+    const q = Core.parseYmd(ds);
+    b.setAttribute('aria-label', q.m + '月' + q.d + '日 星期' + Core.WD[i] + (ds === td ? '（今天）' : '') + '，' + items.length + ' 項任務' + (over ? '，有逾期' : ''));
+    b.appendChild(el('span', 'wk-wd', Core.WD[i])); b.appendChild(el('span', 'wk-d', String(q.d))); b.appendChild(hidden(el('span', 'wk-dot')));
+    box.appendChild(b);
+  }
+}
+function renderAgItem(t, td) {
+  const over = !t.done && t.due < td;
+  const li = el('li', 'ag-item' + (t.done ? ' done' : '') + (over ? ' over' : '') + (t.pinned ? ' pinned' : ''));
+  li.dataset.id = t.id;
+  const p = Core.parseYmd(t.due);
+  li.appendChild(el('span', 'ag-when', over ? p.m + '月' + p.d + '日' : (Core.validTime(t.time) ? t.time : '整天')));
+  li.appendChild(hidden(el('span', 'ag-ico', over ? '⏰' : t.pinned ? '📌' : t.priority === 'high' ? '🔥' : t.recur ? '🔁' : '📝')));
+  const body = el('div', 'ag-body');
+  body.appendChild(el('p', 'ag-title', t.title));
+  const sub = [t.done ? '✔ 已完成' : Core.countdown(t.due, td).text, Core.PRI_ICON[t.priority] + ' 優先' + Core.PRI_LABEL[t.priority]];
+  if (t.pinned) sub.push('📌 置頂');
+  if (t.recur) sub.push('🔁 ' + Core.recurText(t.recur));
+  body.appendChild(el('p', 'ag-sub', sub.join(' · ')));
+  li.appendChild(body);
+  const c = el('button', 'ag-chk', '✓'); c.type = 'button'; c.dataset.ag = 'toggle'; c.setAttribute('aria-pressed', String(!!t.done));
+  c.setAttribute('aria-label', (t.done ? '取消完成：' : '標記完成：') + t.title); li.appendChild(c);
+  if (t.done) li.appendChild(hidden(el('span', 'ag-pad')));
+  else { const g = el('button', 'ag-go', '›'); g.type = 'button'; g.dataset.ag = 'edit'; g.setAttribute('aria-label', '編輯：' + t.title); li.appendChild(g); }
+  return li;
+}
+function renderAgenda(td) {
+  const box = $('agenda'); box.textContent = '';
+  const g = Core.agendaGroups(state.tasks, homeSel, td);
+  const secs = {}; let total = 0;
+  GROUPS.forEach((G) => {
+    const items = g[G.k]; if (!items.length) return;
+    total += items.length;
+    const sec = el('section', 'grp grp-' + G.k); sec.dataset.grp = G.k;
+    const h = el('h3'); const b = el('button', 'grp-head'); b.type = 'button'; b.dataset.grp = G.k;
+    b.setAttribute('aria-expanded', String(!fold[G.k])); b.setAttribute('aria-controls', 'grp-list-' + G.k);
+    b.appendChild(hidden(el('span', 'grp-ico', G.ico))); b.appendChild(el('span', 'grp-name', G.name + ' ')); b.appendChild(el('span', 'grp-n', String(items.length)));
+    b.appendChild(hidden(el('span', 'grp-chev', '▴')));
+    h.appendChild(b); sec.appendChild(h);
+    const ul = el('ul', 'agenda'); ul.id = 'grp-list-' + G.k; ul.hidden = !!fold[G.k];
+    items.forEach((t) => ul.appendChild(renderAgItem(t, td)));
+    sec.appendChild(ul); box.appendChild(sec);
+    secs[G.k] = { sec, ul, items };
+  });
+  $('emptyAgenda').hidden = total > 0;
+  if (homeSel === td && total > 0) insertNowLine(box, secs);
+}
+function makeNowLine(tag, hm) {
+  const n = el(tag, 'now-line'); n.id = 'nowLine'; n.setAttribute('role', 'separator'); n.setAttribute('aria-label', '現在 ' + hm + '，以下是接下來的提醒');
+  n.appendChild(el('span', 'now-lab', '現在 ' + hm)); n.appendChild(hidden(el('span', 'now-dot'))); n.appendChild(el('span', 'now-next', '接下來的提醒'));
+  return n;
+}
+function insertNowLine(box, secs) {
+  const hm = nowHM();
+  for (const k of ['morning', 'afternoon', 'evening']) {
+    const s = secs[k]; if (!s) continue;
+    const i = s.items.findIndex((t) => t.time >= hm);
+    if (i < 0) continue;
+    if (i === 0 || s.ul.hidden) box.insertBefore(makeNowLine('div', hm), s.sec);
+    else s.ul.insertBefore(makeNowLine('li', hm), s.ul.children[i]);
+    return;
+  }
+  box.appendChild(makeNowLine('div', hm));
+}
+function renderUpcoming(td) {
+  const list = state.tasks.filter((t) => !t.done && t.due >= td).sort((a, b) => a.due !== b.due ? (a.due < b.due ? -1 : 1) : Core.byTime(a, b)).slice(0, 10);
+  const ul = $('upList'); ul.textContent = '';
+  list.forEach((t) => {
+    const li = el('li'); const b = el('button', 'ev-btn' + (t.due === td ? ' is-due' : '')); b.type = 'button'; b.dataset.date = t.due; b.dataset.id = t.id;
+    b.appendChild(el('span', 'ev-title', t.title));
+    b.appendChild(el('span', 'ev-when', Core.fmtShort(t.due) + ' · ' + (Core.validTime(t.time) ? t.time : '整天') + (t.due === td ? ' · 今天' : '')));
+    li.appendChild(b); ul.appendChild(li);
+  });
+  $('emptyUp').hidden = list.length > 0;
+}
+function renderQuads(td) {
+  const box = $('quads'); box.textContent = '';
+  const open = Core.sortTasks(state.tasks.filter((t) => !t.done));
+  QUADS.forEach((Q) => {
+    const items = open.filter((t) => Core.quadrant(t, td) === Q.k);
+    const sec = el('section', 'quad quad-' + Q.k); sec.dataset.quad = Q.k;
+    const h = el('h3'); h.appendChild(hidden(el('span', 'q-ico', Q.ico))); h.appendChild(el('span', 'q-name', Q.name)); h.appendChild(el('span', 'q-n', String(items.length)));
+    sec.appendChild(h);
+    if (items.length) {
+      const ul = el('ul', 'qlist');
+      items.forEach((t) => {
+        const li = el('li', 'q-item'); li.dataset.id = t.id;
+        const c = el('button', 'q-chk'); c.type = 'button'; c.dataset.q = 'done'; c.setAttribute('aria-label', '標記完成：' + t.title); li.appendChild(c);
+        const tb = el('button', 'q-title', t.title); tb.type = 'button'; tb.dataset.q = 'edit'; tb.setAttribute('aria-label', '編輯：' + t.title); li.appendChild(tb);
+        const d = Core.dueLabel(t.due, td); li.appendChild(el('span', 'q-due' + (d.due ? ' is-due' : ''), d.text));
+        ul.appendChild(li);
+      });
+      sec.appendChild(ul);
+    } else sec.appendChild(el('p', 'q-empty', '沒有任務'));
+    box.appendChild(sec);
+  });
+  $('quadCount').textContent = '未完成 ' + open.length + ' 項';
+}
+function onAgenda(e) {
+  const gh = e.target.closest('button.grp-head');
+  if (gh) { const k = gh.dataset.grp; fold[k] = !fold[k]; saveFold(); render(); const nb = document.querySelector('#agenda button.grp-head[data-grp="' + k + '"]'); if (nb) nb.focus(); return; }
+  const b = e.target.closest('[data-ag]'); if (!b) return;
+  const li = b.closest('li.ag-item'); if (!li) return;
+  const t = state.tasks.find((x) => x.id === li.dataset.id); if (!t) return;
+  if (b.dataset.ag === 'toggle') { if (t.done) uncompleteTask(t); else completeTask(t); }
+  else if (b.dataset.ag === 'edit' && !t.done) openForm(t.id);
+}
+function onQuads(e) {
+  const b = e.target.closest('[data-q]'); if (!b) return;
+  const li = b.closest('li.q-item'); if (!li) return;
+  const t = state.tasks.find((x) => x.id === li.dataset.id); if (!t) return;
+  if (b.dataset.q === 'done') completeTask(t); else if (b.dataset.q === 'edit') openForm(t.id);
+}
+function shiftWeek(n) {
+  let d = Core.addDays(homeSel || today(), n);
+  if (d < '2000-01-01') d = '2000-01-01';
+  if (d > '2100-12-31') d = '2100-12-31';
+  homeSel = d; render();
+}
 
 /* ===== 提醒 ===== */
 function remindItems() {
@@ -1181,6 +1520,15 @@ function init() {
   $('calPrev').addEventListener('click', () => { calM--; if (calM < 1) { calM = 12; calY--; } render(); });
   $('calNext').addEventListener('click', () => { calM++; if (calM > 12) { calM = 1; calY++; } render(); });
   $('calToday').addEventListener('click', () => { const p = Core.parseYmd(today()); calY = p.y; calM = p.m; calSel = today(); render(); });
+  $('weekStrip').addEventListener('click', (e) => { const b = e.target.closest('button.wk-day'); if (!b) return; homeSel = b.dataset.date; render(); });
+  $('wkPrev').addEventListener('click', () => shiftWeek(-7));
+  $('wkNext').addEventListener('click', () => shiftWeek(7));
+  $('wkToday').addEventListener('click', () => { homeSel = today(); render(); });
+  $('agenda').addEventListener('click', onAgenda);
+  $('quads').addEventListener('click', onQuads);
+  $('upList').addEventListener('click', (e) => { const b = e.target.closest('button.ev-btn'); if (!b) return; const p = Core.parseYmd(b.dataset.date); calY = p.y; calM = p.m; calSel = b.dataset.date; render(); $('calDayCard').scrollIntoView({ block: 'start' }); });
+  $('fPri').addEventListener('change', () => { if (!impTouched) $('fImp').checked = $('fPri').value === 'high'; });
+  $('fImp').addEventListener('change', () => { impTouched = true; });
   $('calGrid').addEventListener('click', (e) => { const b = e.target.closest('button.cal-day'); if (!b) return; calSel = b.dataset.date; render(); });
   $('setPopup').addEventListener('change', () => { state.settings.popupOnOpen = $('setPopup').checked; save(); render(); });
   $('setNotify').addEventListener('change', async () => {
