@@ -191,6 +191,14 @@ ul.hint li{margin:4px 0}
 .msg{margin:6px 0 0;font-size:.95rem}
 .msg.bad{color:var(--hi)}
 .msg.good{color:var(--ok)}
+/* fix7：同步狀態（文字＋符號，不只靠顏色） */
+.sync-line{margin:2px 0 0;font-size:.85rem;color:var(--sub);overflow-wrap:anywhere}
+.sync-state{margin:4px 0 6px;font-size:1.05rem;font-weight:700;color:var(--ink);overflow-wrap:anywhere}
+.sync-line[data-k="error"],.sync-state[data-k="error"]{color:var(--hi)}
+.sync-line[data-k="ok"],.sync-state[data-k="ok"]{color:var(--ok)}
+.sync-line[data-k="offline"],.sync-state[data-k="offline"]{color:var(--mid)}
+.sync-btns button{min-height:44px;white-space:normal}
+#syncAccount,#syncErr{overflow-wrap:anywhere}
 .themes{border:0;padding:0;margin:0;display:grid;grid-template-columns:1fr;gap:8px}
 .themes legend{padding:0;margin-bottom:6px}
 @media (min-width:480px){.themes{grid-template-columns:1fr 1fr}}
@@ -408,6 +416,7 @@ html[data-theme="washi"] .wk-day{border-radius:4px}
     <div>
       <h1>每日工作清單</h1>
       <p id="todayLine">—</p>
+      <p class="sync-line" id="syncLine" data-k="out">☁ 未登入（只存在這台）</p>
     </div>
     <button type="button" id="addBtn">＋ 新增任務</button>
   </div>
@@ -514,9 +523,31 @@ html[data-theme="washi"] .wk-day{border-radius:4px}
         <button type="button" id="testNotifyBtn">試發一則通知</button>
       </div>
     </article>
+    <article class="card" id="syncCard">
+      <h2>雲端同步（Google 帳號）</h2>
+      <p class="sync-state" id="syncState" role="status" data-k="out">☁ 未登入（只存在這台）</p>
+      <p class="hint" id="syncAccount" hidden></p>
+      <p class="msg bad" id="syncErr" hidden></p>
+      <div class="set-row sync-btns">
+        <button type="button" class="primary" id="loginBtn">用 Google 帳號登入並同步</button>
+        <button type="button" id="loginCancelBtn" hidden>取消登入</button>
+        <button type="button" id="resyncBtn" hidden>重新同步</button>
+        <button type="button" id="logoutBtn" hidden>登出（這台的資料會留著）</button>
+        <p class="msg" id="syncMsg" role="status"></p>
+      </div>
+      <div class="set-row">
+        <p class="hint">手機和電腦用<strong>同一個 Google 帳號</strong>登入後，新增、修改、完成、刪除、置頂都會自動同步到另一台。沒網路時照常可以用，連上網後自動補傳。不登入就跟以前一樣只存在這台；登出後這台的資料也不會被清掉。風格和系統通知是每台各自設定，不會同步。</p>
+      </div>
+      <div class="set-row" id="iosHint" hidden>
+        <p class="hint"><strong>iPhone 主畫面 App 說明：</strong>如果按登入後，登入視窗完成了卻回不到這裡、或一直停在「已打開 Google 登入視窗」，請按「取消登入」，改用 Safari 打開下面的網址登入使用。</p>
+        <p class="hint">你現在是從主畫面圖示打開的。注意：主畫面 App 和 Safari 的資料是<strong>分開存</strong>的，在 Safari 登入不會讓主畫面 App 也登入；但兩邊都登入同一個帳號後，資料會透過雲端同步。如果主畫面 App 登入不了，裡面原有的資料可以先在這裡「匯出備份」，再到 Safari 登入後「匯入 → 合併」，就會同步上去。</p>
+        <button type="button" id="copyUrlBtn">複製網址（https://isahooay.github.io/daily-tasks/）</button>
+        <p class="msg" id="copyUrlMsg" role="status"></p>
+      </div>
+    </article>
     <article class="card">
       <h2>備份與還原（JSON）</h2>
-      <p class="hint">資料只存在這台手機（這個瀏覽器）裡，不會自動同步到別台。換手機或清除瀏覽器資料前，請先匯出備份。</p>
+      <p class="hint">資料一定會先存在這台手機（這個瀏覽器）裡。在上面「雲端同步」登入後，會自動同步到同一個帳號的其他裝置；沒登入就只存在這台。雲端同步不等於備份，換手機或清除瀏覽器資料前，仍建議先匯出備份。</p>
       <div class="set-row">
         <button type="button" class="primary" id="exportJsonBtn">匯出備份（JSON）</button>
         <p class="hint" id="lastBackup">尚未匯出過備份。</p>
@@ -548,7 +579,7 @@ html[data-theme="washi"] .wk-day{border-radius:4px}
   </section>
 
   <footer class="sig">
-    <p>作者：帥｜修改日期 2026-11-15 03:28</p>
+    <p>作者：帥｜修改日期 2026-11-15 22:52</p>
     <p>製作日期 2026-11-14 19:49｜GROK 輔助</p>
   </footer>
 </main>
@@ -1004,8 +1035,9 @@ function load() {
   }
 }
 let state = load();
+let Sync = null; /* fix7：雲端同步（下面定義） */
 function save() {
-  try { localStorage.setItem(KEY, JSON.stringify({ v: 1, tasks: state.tasks, settings: state.settings })); return true; }
+  try { localStorage.setItem(KEY, JSON.stringify({ v: 1, tasks: state.tasks, settings: state.settings })); if (Sync) { try { Sync.scan(); } catch (e) { /* 同步出錯不影響本機 */ } } return true; }
   catch (e) { alert('儲存失敗：手機空間不足或瀏覽器不允許儲存。請先匯出備份。'); return false; }
 }
 
@@ -1505,6 +1537,7 @@ function importReplace() {
   catch (e) { alert('無法保留取代前的資料，已取消取代。'); return; }
   state.tasks = pendingImport.tasks.slice();
   const note = applySettings(pendingImport.settings);
+  if (Sync) Sync.markReplace(); /* fix7：取代前的雲端舊資料不再合併回來 */
   save(); $('importDlg').close();
   finishImport('✔ 已用備份取代：現在共 ' + state.tasks.length + ' 筆，提醒設定也一起還原。' + note, true); render();
 }
@@ -1531,6 +1564,316 @@ function applyTheme(t, persist) {
   }
   return t;
 }
+
+/* ===== fix7：雲端同步（Google 登入＋Firestore）=====
+   本機 localStorage 永遠是主資料；雲端只負責同步。沒登入時只有打開設定頁才預先載入雲端程式（不連資料庫）。
+   雲端格式：dailyTasks/{uid}/tasks/{文件ID} = { id, deleted, updatedAt(數字時鐘), deviceId, task(整筆任務或 null) }（5 個欄位）
+             dailyTasks/{uid}/meta/settings = { popupOnOpen, updatedAt }
+   每筆各自比較 updatedAt，大的為準；刪除留墓碑（deleted:true），舊資料不會被合併回來。 */
+const KEY_SYNC = 'GROK_每日工作清單_同步_v1';
+const KEY_EMU = 'GROK_每日工作清單_測試模擬器';
+Sync = (function () {
+  const FB_VER = '13.3.0';
+  const SDK = 'https://www.gstatic.com/firebasejs/' + FB_VER + '/';
+  const FB_CONFIG = { apiKey: 'AIzaSyCyJqo5YgyHxyG2-w8shLLtYAvU0ZGgZoc', authDomain: 'my-ledger-ddac8.firebaseapp.com', projectId: 'my-ledger-ddac8',
+    storageBucket: 'my-ledger-ddac8.firebasestorage.app', messagingSenderId: '548780029700', appId: '1:548780029700:web:7c57aaa00df0b1ac9c4251' };
+  const APP_URL = 'https://isahooay.github.io/daily-tasks/';
+  /* 測試用模擬器開關：只有在本機（localhost／127.0.0.1）而且 localStorage 有設開關才會接模擬器；正式網址一律忽略 */
+  let EMU = false;
+  try { EMU = /^(localhost|127\.0\.0\.1)$/.test(location.hostname) && localStorage.getItem(KEY_EMU) === '1'; } catch (e) { EMU = false; }
+  const standalone = (function () { try { return navigator.standalone === true || window.matchMedia('(display-mode: standalone)').matches; } catch (e) { return false; } })();
+
+  function stable(v) {
+    if (Array.isArray(v)) return '[' + v.map(stable).join(',') + ']';
+    if (v && typeof v === 'object') return '{' + Object.keys(v).filter((k) => v[k] !== undefined).sort().map((k) => JSON.stringify(k) + ':' + stable(v[k])).join(',') + '}';
+    return JSON.stringify(v === undefined ? null : v);
+  }
+  function hash(s) {
+    let a = 0x811c9dc5, b = 0x01000193 ^ 0x5bd1e995;
+    for (let i = 0; i < s.length; i++) { const c = s.charCodeAt(i); a = Math.imul(a ^ c, 0x01000193); b = Math.imul(b ^ c, 0x5bd1e995) ^ (b >>> 15); }
+    return (a >>> 0).toString(36) + '.' + (b >>> 0).toString(36) + '.' + s.length.toString(36);
+  }
+  const H = (t) => hash(stable(t));
+  function rid() { try { if (crypto.randomUUID) return crypto.randomUUID(); } catch (e) { /* 沒有就用下面 */ } return Date.now().toString(36) + Math.random().toString(36).slice(2, 10); }
+  function docId(id) {
+    if (/^[A-Za-z0-9_-]{1,100}$/.test(id) && !/^__.*__$/.test(id)) return id;
+    return 'e-' + Array.from(new TextEncoder().encode(id)).map((x) => x.toString(16).padStart(2, '0')).join('');
+  }
+
+  /* ---- 同步紀錄（獨立 key，不動任務資料格式）---- */
+  let meta = null;
+  function freshMeta() {
+    const m = { v: 1, deviceId: rid(), uid: null, email: '', everUid: null, base: {}, clock: {}, tomb: {}, pending: {}, setBase: state.settings.popupOnOpen, setClock: 1, setPending: true, lastTick: 0, lastSyncAt: null, replaceAt: 0 };
+    state.tasks.forEach((t) => { m.base[t.id] = H(t); m.clock[t.id] = Date.parse(t.updatedAt || t.createdAt || '') || 1; m.pending[t.id] = 1; });
+    return m;
+  }
+  function loadMeta() {
+    let m = null;
+    try { m = JSON.parse(localStorage.getItem(KEY_SYNC) || 'null'); } catch (e) { m = null; }
+    if (!m || typeof m !== 'object' || m.v !== 1) return freshMeta();
+    ['base', 'clock', 'tomb', 'pending'].forEach((k) => { if (!m[k] || typeof m[k] !== 'object') m[k] = {}; });
+    if (typeof m.deviceId !== 'string') m.deviceId = rid();
+    if (typeof m.lastTick !== 'number') m.lastTick = 0;
+    if (typeof m.setClock !== 'number') m.setClock = 1;
+    if (typeof m.replaceAt !== 'number') m.replaceAt = 0;
+    return m;
+  }
+  function saveMeta() { try { localStorage.setItem(KEY_SYNC, JSON.stringify(meta)); } catch (e) { /* 存不下：下次打開會重新比對 */ } }
+  function tick() { const n = Math.max(Date.now(), (meta.lastTick || 0) + 1); meta.lastTick = n; return n; }
+  function pendingCount() { return Object.keys(meta.pending).length + (meta.setPending ? 1 : 0); }
+
+  /* 比對本機資料和上次紀錄：找出新增、修改、刪除（每次 save() 後呼叫） */
+  function scan() {
+    if (!meta) return;
+    let changed = false; const seen = {};
+    state.tasks.forEach((t) => {
+      seen[t.id] = 1; const h = H(t);
+      if (meta.base[t.id] !== h) { meta.base[t.id] = h; meta.clock[t.id] = tick(); meta.pending[t.id] = 1; delete meta.tomb[t.id]; changed = true; }
+    });
+    Object.keys(meta.base).forEach((id) => {
+      if (seen[id]) return;
+      delete meta.base[id]; const c = tick(); meta.clock[id] = c; meta.tomb[id] = c; meta.pending[id] = 1; changed = true;
+    });
+    if (state.settings.popupOnOpen !== meta.setBase) { meta.setBase = state.settings.popupOnOpen; meta.setClock = tick(); meta.setPending = true; changed = true; }
+    if (changed) { saveMeta(); schedule(); ui(); }
+  }
+  function markReplace() { if (meta) { meta.replaceAt = tick(); saveMeta(); } }
+  function rawSave() {
+    try { localStorage.setItem(KEY, JSON.stringify({ v: 1, tasks: state.tasks, settings: state.settings })); return true; } catch (e) { return false; }
+  }
+
+  /* ---- 雲端 ---- */
+  let fb = null, auth = null, db = null, user = null, unsubT = null, unsubS = null, sdkP = null;
+  let gotServer = false, flushing = false, again = false, errMsg = '', timer = null, retryTimer = null, loginBusy = false, sdkFailed = false;
+  function ensureSdk() {
+    if (sdkP) return sdkP;
+    sdkP = Promise.all([import(SDK + 'firebase-app.js'), import(SDK + 'firebase-auth.js'), import(SDK + 'firebase-firestore.js')]).then(([A, Au, F]) => {
+      if (fb) return fb;
+      const app = A.initializeApp(FB_CONFIG, 'daily-tasks');
+      auth = Au.getAuth(app);
+      if (EMU) Au.connectAuthEmulator(auth, 'http://127.0.0.1:9099', { disableWarnings: true });
+      db = F.initializeFirestore(app, {});
+      if (EMU) F.connectFirestoreEmulator(db, '127.0.0.1', 8080);
+      fb = Object.assign({}, Au, F);
+      sdkFailed = false;
+      Au.onAuthStateChanged(auth, onUser, (e) => { errMsg = errText(e); ui(); });
+      if (!navigator.onLine) F.disableNetwork(db).catch(() => {});
+      return fb;
+    }).catch((e) => { sdkP = null; sdkFailed = true; throw e; });
+    return sdkP;
+  }
+  function errText(e) {
+    const c = (e && e.code) || '';
+    if (c === 'auth/popup-blocked') return '登入視窗被擋住了，請允許跳出視窗後再按一次';
+    if (c === 'auth/popup-closed-by-user' || c === 'auth/cancelled-popup-request' || c === 'auth/user-cancelled') return '登入視窗關掉了，還沒有登入';
+    if (c === 'auth/network-request-failed' || c === 'unavailable') return '網路有問題，請確認有網路後再試';
+    if (c === 'auth/unauthorized-domain') return '這個網址沒有被允許登入（請用 ' + APP_URL + ' 開啟）';
+    if (c === 'auth/web-storage-unsupported' || c === 'auth/operation-not-supported-in-this-environment') return '這個瀏覽器不支援登入，請改用 Safari 或 Chrome';
+    if (c === 'permission-denied' || c === 'firestore/permission-denied') return '雲端拒絕存取（權限不足）';
+    if (c === 'resource-exhausted') return '雲端用量超過上限，請稍後再試';
+    return '發生錯誤' + (c ? '（' + c + '）' : '');
+  }
+  function onUser(u) {
+    if (!u) {
+      user = null; stopListen();
+      if (meta.uid) { meta.uid = null; meta.email = ''; saveMeta(); }
+      ui(); return;
+    }
+    if (meta.everUid && meta.everUid !== u.uid && meta.uid !== u.uid && state.tasks.length) {
+      const ok = confirm('這台裝置之前是跟另一個 Google 帳號同步的。\n要把這台目前的 ' + state.tasks.length + ' 筆資料也合併到「' + (u.email || '這個帳號') + '」嗎？\n按「取消」會登出，這台的資料不會變動。');
+      if (!ok) { fb.signOut(auth).catch(() => {}); return; }
+      Object.keys(meta.base).forEach((id) => { meta.pending[id] = 1; });
+      meta.setPending = true;
+    }
+    user = u; meta.uid = u.uid; meta.everUid = u.uid; meta.email = u.email || ''; saveMeta();
+    loginBusy = false; errMsg = '';
+    startListen(); ui();
+  }
+  function stopListen() { if (unsubT) unsubT(); if (unsubS) unsubS(); unsubT = unsubS = null; gotServer = false; }
+  function startListen() {
+    stopListen();
+    if (!user || !db) return;
+    const uid = user.uid; let first = true;
+    unsubT = fb.onSnapshot(fb.collection(db, 'dailyTasks', uid, 'tasks'), { includeMetadataChanges: true }, (snap) => {
+      if (!user || user.uid !== uid) return;
+      const changes = snap.docChanges().filter((c) => c.type !== 'removed').map((c) => c.doc);
+      try {
+        if (first && !snap.metadata.fromCache) { first = false; applyRemote(snap.docs, true); gotServer = true; }
+        else if (changes.length) applyRemote(changes, false);
+      } catch (e) { errMsg = '套用雲端資料時發生錯誤'; }
+      if (!snap.metadata.fromCache) { gotServer = true; if (errMsg && !flushing) errMsg = ''; }
+      ui(); schedule();
+    }, (e) => { errMsg = errText(e); gotServer = false; ui(); retryLater(); });
+    unsubS = fb.onSnapshot(fb.doc(db, 'dailyTasks', uid, 'meta', 'settings'), (s) => {
+      if (!user || user.uid !== uid) return;
+      const d = s.exists() ? s.data() : null;
+      if (!d) { meta.setPending = true; schedule(); return; }
+      if (typeof d.updatedAt !== 'number' || typeof d.popupOnOpen !== 'boolean') return;
+      if (meta.setPending && meta.setClock >= d.updatedAt) return;
+      if (d.updatedAt < meta.setClock) { meta.setPending = true; schedule(); return; }
+      if (d.updatedAt > meta.setClock) {
+        state.settings.popupOnOpen = d.popupOnOpen; meta.setBase = d.popupOnOpen; meta.setClock = d.updatedAt; meta.setPending = false;
+        if (d.updatedAt > meta.lastTick) meta.lastTick = d.updatedAt;
+        rawSave(); saveMeta(); render();
+      }
+    }, (e) => { errMsg = errText(e); ui(); });
+  }
+  /* 套用雲端資料：每筆比 updatedAt，大的為準 */
+  function applyRemote(docs, full) {
+    const byId = new Map(state.tasks.map((t) => [t.id, t]));
+    const seen = {}; let touched = false;
+    docs.forEach((doc) => {
+      const d = doc.data();
+      if (!d || typeof d.id !== 'string' || docId(d.id) !== doc.id || typeof d.updatedAt !== 'number') return;
+      const id = d.id, R = d.updatedAt, L = meta.clock[id] || 0;
+      seen[id] = 1;
+      if (R > meta.lastTick) meta.lastTick = R;
+      if (meta.pending[id] && L >= R) return;
+      if (R < L) { meta.pending[id] = 1; return; }
+      if (R === L) { delete meta.pending[id]; return; }
+      if (d.deleted === true) {
+        if (byId.has(id)) { byId.delete(id); touched = true; }
+        delete meta.base[id]; meta.tomb[id] = R;
+      } else {
+        if (!Core.validTask(d.task) || d.task.id !== id) return;
+        if (!byId.has(id) && meta.replaceAt && R < meta.replaceAt) {
+          /* 「全部取代」之前就在雲端、這台沒有的舊資料：不要合併回來，改成墓碑 */
+          const c = tick(); meta.clock[id] = c; meta.tomb[id] = c; meta.pending[id] = 1; return;
+        }
+        const nt = Core.normalizeTask(d.task);
+        byId.set(id, nt); meta.base[id] = H(nt); delete meta.tomb[id]; touched = true;
+      }
+      meta.clock[id] = R; delete meta.pending[id];
+    });
+    if (full) {
+      /* 第一次連上：這台有、雲端沒有的（含墓碑）全部上傳 */
+      Object.keys(meta.base).concat(Object.keys(meta.tomb)).forEach((id) => { if (!seen[id]) meta.pending[id] = 1; });
+    }
+    if (touched) {
+      const order = state.tasks.map((t) => t.id).filter((id) => byId.has(id));
+      const rest = Array.from(byId.keys()).filter((id) => !order.includes(id));
+      state.tasks = order.concat(rest).map((id) => byId.get(id));
+      rawSave(); render();
+    }
+    saveMeta();
+  }
+  function schedule() { if (!user) return; clearTimeout(timer); timer = setTimeout(flush, 300); }
+  function retryLater() { clearTimeout(retryTimer); retryTimer = setTimeout(() => { if (user) { startListen(); flush(); } }, 30000); }
+  async function flush() {
+    if (!user || !db || !gotServer) return;
+    if (flushing) { again = true; return; }
+    flushing = true; ui();
+    try {
+      do {
+        again = false;
+        const uid = user.uid;
+        const ids = Object.keys(meta.pending);
+        for (let i = 0; i < ids.length; i += 400) {
+          const part = ids.slice(i, i + 400), sent = {};
+          const batch = fb.writeBatch(db);
+          part.forEach((id) => {
+            const c = meta.clock[id] || tick(); meta.clock[id] = c; sent[id] = c;
+            const t = meta.tomb[id] ? null : state.tasks.find((x) => x.id === id);
+            const ref = fb.doc(db, 'dailyTasks', uid, 'tasks', docId(id));
+            if (t) batch.set(ref, { id, deleted: false, updatedAt: c, deviceId: meta.deviceId, task: JSON.parse(JSON.stringify(t)) });
+            else batch.set(ref, { id, deleted: true, updatedAt: c, deviceId: meta.deviceId, task: null });
+          });
+          await batch.commit();
+          part.forEach((id) => { if (meta.clock[id] === sent[id]) delete meta.pending[id]; });
+          saveMeta();
+        }
+        if (meta.setPending) {
+          const c = meta.setClock;
+          await fb.setDoc(fb.doc(db, 'dailyTasks', uid, 'meta', 'settings'), { popupOnOpen: !!meta.setBase, updatedAt: c });
+          if (meta.setClock === c) meta.setPending = false;
+        }
+        meta.lastSyncAt = new Date().toISOString(); saveMeta();
+      } while (again && user);
+      errMsg = '';
+    } catch (e) {
+      errMsg = errText(e); retryLater();
+    } finally { flushing = false; ui(); }
+  }
+
+  /* ---- 登入／登出 ---- */
+  /* 登入要在按鈕的點擊當下直接呼叫 signInWithPopup，否則 Safari 會擋跳出視窗；所以打開設定頁時就先載入雲端程式 */
+  function login() {
+    if (loginBusy) return;
+    if (!fb) {
+      showMsg('雲端功能載入中，請等幾秒再按一次「用 Google 帳號登入」…', true);
+      ensureSdk().then(() => showMsg('雲端功能已就緒，請再按一次「用 Google 帳號登入」。', true))
+        .catch(() => showMsg('✖ 雲端功能載入失敗（可能沒有網路），先用本機模式，資料不受影響。', false));
+      return;
+    }
+    loginBusy = true; showMsg('已打開 Google 登入視窗，請在視窗裡選帳號…', true);
+    const p = new fb.GoogleAuthProvider(); p.setCustomParameters({ prompt: 'select_account' });
+    fb.signInWithPopup(auth, p)
+      .then(() => showMsg('✔ 已登入，開始同步。這台原有的資料會一起合併上雲端。', true))
+      .catch((e) => showMsg('✖ ' + errText(e) + '。' + (standalone ? '如果一直登入不了，請看下面「iPhone 主畫面 App」的說明。' : ''), false))
+      .finally(() => { loginBusy = false; ui(); });
+  }
+  function cancelLogin() { loginBusy = false; showMsg('已取消登入。如果登入視窗完成後回不到這裡，請照下面說明改用 Safari 開啟。', false); ui(); }
+  async function logout() {
+    if (!confirm('登出後，這台的資料會留著不會被清掉，但之後只存在這台，不會再同步。\n確定要登出嗎？')) return;
+    try { stopListen(); if (fb && auth) await fb.signOut(auth); } catch (e) { /* 照樣當作登出 */ }
+    user = null; meta.uid = null; meta.email = ''; saveMeta();
+    showMsg('✔ 已登出。這台的 ' + state.tasks.length + ' 筆資料都還在，之後只存在這台。', true); ui();
+  }
+  function resync() { if (!user) return; errMsg = ''; startListen(); ui(); }
+
+  /* ---- 畫面 ---- */
+  let msgText = '', msgGood = true;
+  function showMsg(t, good) { msgText = t; msgGood = good; ui(); }
+  function status() {
+    if (!meta.uid && !user) return { k: 'out', text: '☁ 未登入（只存在這台）' };
+    if (!navigator.onLine) return { k: 'offline', text: '⚠ 離線待上傳（' + pendingCount() + ' 筆）' };
+    if (errMsg) return { k: 'error', text: '✖ 同步錯誤（本機照常可用）' };
+    if (sdkFailed && !fb) return { k: 'error', text: '✖ 同步錯誤（本機照常可用）' };
+    if (!user || !gotServer || flushing || pendingCount() > 0) return { k: 'busy', text: '⟳ 同步中…' };
+    return { k: 'ok', text: '✔ 已同步' };
+  }
+  function ui() {
+    if (!meta || !document.getElementById('syncLine')) return;
+    const s = status();
+    const line = $('syncLine'); line.textContent = s.text; line.dataset.k = s.k;
+    const st = $('syncState'); st.textContent = s.text; st.dataset.k = s.k;
+    const logged = !!(meta.uid || user);
+    $('syncAccount').hidden = !logged;
+    $('syncAccount').textContent = logged ? '帳號：' + (meta.email || (user && user.email) || '（讀取中）') + (meta.lastSyncAt ? '｜上次上傳：' + new Date(meta.lastSyncAt).toLocaleString('zh-TW', { hour12: false }) : '') : '';
+    $('syncErr').hidden = !(s.k === 'error');
+    $('syncErr').textContent = s.k === 'error' ? '原因：' + (errMsg || '雲端功能載入失敗（可能沒有網路）') + '。資料仍存在這台，連上網後會自動再試。' : '';
+    $('loginBtn').hidden = logged; $('loginBtn').disabled = loginBusy;
+    $('loginCancelBtn').hidden = !(loginBusy && !logged);
+    $('logoutBtn').hidden = !logged; $('resyncBtn').hidden = !logged;
+    const m = $('syncMsg'); m.textContent = msgText; m.className = 'msg' + (msgText ? (msgGood ? ' good' : ' bad') : '');
+    $('iosHint').hidden = !standalone; /* 只有從主畫面圖示打開時才顯示 */
+  }
+  function init() {
+    meta = loadMeta(); scan(); saveMeta();
+    $('loginBtn').addEventListener('click', login);
+    $('loginCancelBtn').addEventListener('click', cancelLogin);
+    $('logoutBtn').addEventListener('click', logout);
+    $('resyncBtn').addEventListener('click', resync);
+    $('copyUrlBtn').addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(APP_URL); $('copyUrlMsg').textContent = '✔ 已複製網址，請打開 Safari 貼上'; }
+      catch (e) { $('copyUrlMsg').textContent = '請手動輸入網址：' + APP_URL; }
+    });
+    window.addEventListener('online', () => { if (fb && db) fb.enableNetwork(db).catch(() => {}); if (meta.uid && !fb) ensureSdk().catch(() => ui()); ui(); schedule(); });
+    window.addEventListener('offline', () => { if (fb && db) fb.disableNetwork(db).catch(() => {}); ui(); });
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) { ui(); schedule(); } });
+    ui();
+    document.querySelectorAll('nav.bottom button[data-view="settings"]').forEach((b) => b.addEventListener('click', () => { ensureSdk().catch(() => ui()); }));
+    if (meta.uid) ensureSdk().catch(() => ui());
+  }
+  const api = { init, scan, markReplace, status: () => status(), standalone };
+  if (EMU) Object.assign(api, {
+    emu: true, meta: () => meta, pending: () => pendingCount(), fbx: () => ({ fb, db, auth }),
+    testSignIn: async (sub, email) => { await ensureSdk(); const cred = fb.GoogleAuthProvider.credential(JSON.stringify({ sub, email, email_verified: true })); await fb.signInWithCredential(auth, cred); },
+    login
+  });
+  window.DTSync = api;
+  return api;
+})();
 
 /* ===== 綁定 ===== */
 function init() {
@@ -1594,6 +1937,7 @@ function init() {
   $('undoImportBtn').addEventListener('click', undoImport);
   document.addEventListener('visibilitychange', () => { if (!document.hidden) render(); });
   render();
+  try { Sync.init(); } catch (e) { /* fix7：雲端同步啟動失敗，照樣用本機模式 */ }
   if ('serviceWorker' in navigator && location.protocol !== 'file:') navigator.serviceWorker.register('sw.js').catch(() => {});
   if (state.settings.popupOnOpen) showReminder();
   notifyOnOpen();
