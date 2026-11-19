@@ -161,6 +161,16 @@ li.task.done .task-title{text-decoration:line-through;color:var(--sub)}
 .note{margin:2px 0 6px;color:var(--sub);font-size:.92rem;white-space:pre-wrap;word-break:break-word}
 .task-actions{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
 .task-actions button{padding:4px 10px;min-height:36px;font-size:.92rem}
+/* fix8：完成鍵回饋、復原、本期已完成（狀態靠文字＋符號，不只靠顏色） */
+button.btn-done,button.btn-done:disabled{background:#666666;color:#fff;border-color:#666666;font-weight:700;cursor:not-allowed;opacity:1;box-shadow:none}
+button.btn-done:hover{border-color:#8C8C8C;box-shadow:none;transform:none}
+button.btn-undo{font-size:.88rem;min-height:32px;padding:2px 8px;border-color:#8C8C8C;color:var(--ink);background:var(--btn-bg);font-weight:700}
+.reappear-hint{margin:0;font-size:.9rem;font-weight:700;color:var(--ink)}
+#cardPeriod{border-color:#8C8C8C;margin-top:16px}
+.undo-toast{position:fixed;left:12px;right:12px;bottom:calc(70px + env(safe-area-inset-bottom));z-index:20;display:flex;align-items:center;justify-content:space-between;gap:10px;background:#1a1a1a;color:#fff;border:2px solid #8C8C8C;border-radius:14px;padding:12px 14px;box-shadow:0 8px 24px rgba(0,0,0,.45);font-weight:700}
+.undo-toast[hidden]{display:none !important}
+.undo-toast .undo-toast-text{flex:1;min-width:0;overflow-wrap:anywhere}
+.undo-toast button{flex:0 0 auto;background:#1B4F9C;color:#fff;border:2px solid #fff;font-weight:800;min-height:40px;min-width:64px}
 .chk{display:inline-flex;align-items:center;gap:6px;font-size:.92rem;min-height:36px}
 .chk input{width:20px;height:20px;accent-color:var(--accent)}
 nav.bottom{position:fixed;left:0;right:0;bottom:0;background:var(--nav-bg);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);padding-bottom:env(safe-area-inset-bottom);z-index:5;-webkit-backdrop-filter:blur(18px) saturate(160%);backdrop-filter:blur(18px) saturate(160%)}
@@ -451,6 +461,11 @@ html[data-theme="washi"] .wk-day{border-radius:4px}
         <p class="empty" id="emptyOpen">沒有其他未完成的任務。</p>
       </article>
     </div>
+    <article class="card" id="cardPeriod" hidden>
+      <h2>本期已完成 <span class="count" id="periodCount"></span></h2>
+      <p class="hint">這些重複任務這期已經完成，會等到卡片上寫的日期才回到「未完成」。若要改回去，請按「↩ 復原」。</p>
+      <ul class="tasks" id="listPeriod"></ul>
+    </article>
   </section>
 
   <section id="view-all" aria-label="全部任務" hidden>
@@ -570,7 +585,10 @@ html[data-theme="washi"] .wk-day{border-radius:4px}
         <li>每月固定日期：用到期日的「日」。遇到沒有那一天的月份（例如 31 日遇到 4 月、29～31 日遇到 2 月），改到那個月最後一天；下個月有那一天就回到原本的日子。</li>
         <li>每隔 N 天：從這次的到期日往後算 N 天（1～365）。</li>
         <li>每週固定星期幾：從這次的到期日往後找下一個勾選的星期幾。</li>
-        <li>重複任務按「完成」後，會自動產生下一次。刪除只刪這一次，之後不會再產生。</li>
+        <li>按「完成」後，按鈕會立刻變成灰色的「✔ 已完成」，1 秒內再按不算，避免誤點或連點一次完成兩期。</li>
+        <li>重複任務完成後：每月固定日期、每隔 N 天，會先放到「本期已完成」，等到「下一次到期日那個月份的 1 號」才回到未完成並再次出現完成鍵（例如到期 12/11，會在 12/1 再出現）。每週固定星期幾仍會立刻出現下一次（因為間隔較短）。不重複的任務完成後就留在「已完成」。</li>
+        <li>完成後畫面下方會出現 10 秒的「已完成 …［復原］」提示，按復原會立刻回到完成前的狀態。10 秒後，卡片上仍有「↩ 復原」，按了會再問一次「確定要復原嗎？」。復原會恢復原來的到期日、完成紀錄和重複設定。</li>
+        <li>刪除只刪這一次，之後不會再產生下一次。</li>
         <li>首頁：上方一週日期條可點選切換日期；下面分成「需要關注（逾期、置頂、重要且緊急）」「整天」「早上（12 點前）」「下午（12～18 點）」「晚上（18 點後）」，點組名可收合，會記住。「現在」線只在選今天時出現。</li>
         <li>月曆頁重點優先順序：重要＝有勾「重要」；緊急＝有勾「緊急」，或今天到期、已逾期。</li>
         <li>.ics 是單向匯出到 Google 日曆：在 Google 日曆網頁版「設定 → 匯入與匯出 → 匯入」選檔案。之後在這裡修改不會自動更新到日曆。</li>
@@ -579,10 +597,15 @@ html[data-theme="washi"] .wk-day{border-radius:4px}
   </section>
 
   <footer class="sig">
-    <p>作者：帥｜修改日期 2026-11-15 22:52</p>
+    <p>作者：帥｜修改日期 2026-11-20 07:39</p>
     <p>製作日期 2026-11-14 19:49｜GROK 輔助</p>
   </footer>
 </main>
+
+<div id="undoToast" class="undo-toast" hidden role="status" aria-live="polite">
+  <span class="undo-toast-text" id="undoToastText"></span>
+  <button type="button" id="undoToastBtn">復原</button>
+</div>
 
 <nav class="bottom" aria-label="主選單">
   <button type="button" data-view="home" aria-current="page">首頁</button>
@@ -710,6 +733,7 @@ const Core = (() => {
   function todayStr(now) { return ymd(now || new Date()); }
   function fmtDate(s) { const p = parseYmd(s); return p ? p.y + '年' + p.m + '月' + p.d + '日（星期' + WD[weekday(s)] + '）' : ''; }
   function fmtShort(s) { const p = parseYmd(s); return p ? p.m + '/' + p.d + '（' + WD[weekday(s)] + '）' : ''; }
+  function fmtMd(s) { const p = parseYmd(s); return p ? p.m + '/' + p.d : ''; }
 
   function countdown(due, today) {
     const n = diffDays(today, due);
@@ -742,6 +766,40 @@ const Core = (() => {
     return '';
   }
 
+  /* fix8：下一次何時回到未完成。每月／每隔 N 天＝下一次到期日那個月份的 1 號；若那天已過或就是今天就立刻出現。每週重複維持立刻出現。舊資料沒有 appearOn 視為已出現。 */
+  function monthFirst(due) { const p = parseYmd(due); return p ? p.y + '-' + pad(p.m) + '-01' : null; }
+  function appearOnFor(task, nextDueDate, today) {
+    if (!task || !task.recur || !nextDueDate) return null;
+    if (task.recur.type !== 'monthly' && task.recur.type !== 'interval') return null;
+    const a = monthFirst(nextDueDate);
+    if (!a || a <= today) return null;
+    return a;
+  }
+  function isAppeared(t, today) {
+    if (!t || t.done) return true;
+    if (t.appearOn == null || t.appearOn === '') return true;
+    if (!isValidDate(t.appearOn)) return true;
+    return today >= t.appearOn;
+  }
+  function isOpen(t, today) { return !!(t && !t.done && isAppeared(t, today)); }
+  function isListed(t, today) { return !!(t && (t.done || isAppeared(t, today))); }
+  function reappearOn(tasks, t) {
+    if (!t || !t.nextId) return null;
+    const n = (tasks || []).find((x) => x.id === t.nextId);
+    if (!n || n.done) return null;
+    return n.appearOn && isValidDate(n.appearOn) ? n.appearOn : null;
+  }
+  function isPeriodDone(tasks, t, today) {
+    const a = reappearOn(tasks, t);
+    return !!(t && t.done && a && today < a);
+  }
+  function snapshotTask(t) {
+    const o = JSON.parse(JSON.stringify(t));
+    delete o.undoOf;
+    delete o.undoAddedId;
+    return o;
+  }
+
   /* fix6 排序：置頂 > 重要且緊急 > 重要 > 緊急 > 其他；同層依到期日，再依時間（整天排在有時間的前面），再依建立時間 */
   const QRANK = { iu: 0, i: 1, u: 2, n: 3 };
   function compare(a, b, td) {
@@ -768,6 +826,10 @@ const Core = (() => {
     const o = Object.assign({}, t);
     if (typeof o.important !== 'boolean') o.important = o.priority === 'high';
     delete o.priority;
+    if (o.appearOn != null && o.appearOn !== '' && !isValidDate(o.appearOn)) delete o.appearOn;
+    if (o.undoAddedId != null && typeof o.undoAddedId !== 'string') delete o.undoAddedId;
+    if (o.undoOf != null && (typeof o.undoOf !== 'object' || Array.isArray(o.undoOf))) delete o.undoOf;
+    if (o.undoOf && o.undoOf.undoOf) { const u = Object.assign({}, o.undoOf); delete u.undoOf; delete u.undoAddedId; o.undoOf = u; }
     return o;
   }
   /* 緊急：有勾緊急，或未完成且今天到期／逾期（只用於顯示，不寫回資料） */
@@ -782,6 +844,7 @@ const Core = (() => {
   function agendaGroups(tasks, day, td) {
     const g = { focus: [], allday: [], morning: [], afternoon: [], evening: [] };
     tasks.forEach((t) => {
+      if (!isListed(t, td)) return;
       const focus = !t.done && ((day === td && t.due < td) || (t.due === day && (t.pinned || quadrant(t, td) === 'iu')));
       if (focus) g.focus.push(t);
       else if (t.due === day) g[period(t.time)].push(t);
@@ -873,36 +936,61 @@ const Core = (() => {
       done: false, doneAt: null, nextId: null, createdAt: iso, updatedAt: iso };
   }
 
-  /* 完成：重複任務產生下一次 */
-  function complete(tasks, id, now) {
-    const iso = (now || new Date()).toISOString();
+  /* 完成：重複任務產生下一次；每月／每隔 N 天若下一次在下個月，會先隱藏到該月 1 號。並保存完成前快照供復原。 */
+  function complete(tasks, id, now, today) {
+    const when = now || new Date();
+    const iso = when.toISOString();
+    const td = (today && isValidDate(today)) ? today : todayStr(when);
     const t = tasks.find((x) => x.id === id);
     if (!t || t.done) return { tasks, next: null };
-    const out = tasks.map((x) => x.id === id ? Object.assign({}, x, { done: true, doneAt: iso, updatedAt: iso }) : x);
+    if (!isAppeared(t, td)) return { tasks, next: null, skipped: 'hidden' };
+    const prior = snapshotTask(t);
+    let out = tasks.map((x) => x.id === id ? Object.assign({}, x, { done: true, doneAt: iso, updatedAt: iso, undoOf: prior, undoAddedId: null }) : x);
     let next = null;
     const nd = nextDue(t);
     if (nd && !isValidDate(nd)) return { tasks: out, next: null, outOfRange: nd };
     if (nd) {
       next = Object.assign({}, t, { id: newId(), due: nd, done: false, doneAt: null, nextId: null, createdAt: iso, updatedAt: iso,
         recur: t.recur.type === 'weekly' ? { type: 'weekly', days: t.recur.days.slice() } : Object.assign({}, t.recur) });
+      delete next.undoOf;
+      delete next.undoAddedId;
+      const appear = appearOnFor(t, nd, td);
+      if (appear) next.appearOn = appear;
+      else delete next.appearOn;
       out.push(next);
       const idx = out.findIndex((x) => x.id === id);
-      out[idx] = Object.assign({}, out[idx], { nextId: next.id });
+      out[idx] = Object.assign({}, out[idx], { nextId: next.id, undoAddedId: next.id });
     }
     return { tasks: out, next };
   }
-  /* 取消完成：若有自動產生的下一次且還沒完成，就一起移除 */
+  /* 復原完成：優先用完成前快照恢復原狀態，並移除自動產生且尚未完成的下一次。舊資料沒有快照時走原本欄位還原。 */
   function uncomplete(tasks, id, now) {
     const iso = (now || new Date()).toISOString();
     const t = tasks.find((x) => x.id === id);
     if (!t || !t.done) return { ok: false, tasks, reason: '這筆不是已完成' };
-    let out = tasks;
-    if (t.nextId) {
-      const n = tasks.find((x) => x.id === t.nextId);
-      if (n && n.done) return { ok: false, tasks, reason: '下一次已經完成了，不能取消這一次' };
-      out = tasks.filter((x) => x.id !== t.nextId);
+    const addedId = (typeof t.undoAddedId === 'string' && t.undoAddedId) ? t.undoAddedId : t.nextId;
+    if (addedId) {
+      const n = tasks.find((x) => x.id === addedId);
+      if (n && n.done) return { ok: false, tasks, reason: '下一次已經完成了，不能復原這一次' };
     }
-    out = out.map((x) => x.id === id ? Object.assign({}, x, { done: false, doneAt: null, nextId: null, updatedAt: iso }) : x);
+    let out = addedId ? tasks.filter((x) => x.id !== addedId) : tasks;
+    if (t.undoOf && typeof t.undoOf === 'object' && t.undoOf.id === t.id) {
+      const restored = JSON.parse(JSON.stringify(t.undoOf));
+      delete restored.undoOf;
+      delete restored.undoAddedId;
+      restored.updatedAt = iso;
+      if (validTask(restored)) {
+        out = out.map((x) => x.id === id ? normalizeTask(restored) : x);
+        return { ok: true, tasks: out };
+      }
+    }
+    out = out.map((x) => {
+      if (x.id !== id) return x;
+      const y = Object.assign({}, x, { done: false, doneAt: null, nextId: null, updatedAt: iso });
+      delete y.undoOf;
+      delete y.undoAddedId;
+      return y;
+    });
     return { ok: true, tasks: out };
   }
 
@@ -1014,9 +1102,10 @@ const Core = (() => {
     return { tasks: existing.concat(add), added: add.length, skipped: incoming.length - add.length };
   }
 
-  return { APP_ID, FORMAT_VERSION, TITLE_MAX, WD, ymd, parseYmd, isValidDate, lastDay, addDays, diffDays, weekday, todayStr, fmtDate, fmtShort,
+  return { APP_ID, FORMAT_VERSION, TITLE_MAX, WD, ymd, parseYmd, isValidDate, lastDay, addDays, diffDays, weekday, todayStr, fmtDate, fmtShort, fmtMd,
     countdown, nextDue, monthlyDay, sha256js, recurText, sortTasks, validateInput, validTask, makeTask, complete, uncomplete, icsEscape, fold, rrule, buildIcs,
-    sha256, counts, makeBackup, parseBackup, merge, charLen, validTime, period, isImportant, isUrgent, quadrant, agendaGroups, dueLabel, byTime, normalizeTask, compare };
+    sha256, counts, makeBackup, parseBackup, merge, charLen, validTime, period, isImportant, isUrgent, quadrant, agendaGroups, dueLabel, byTime, normalizeTask, compare,
+    monthFirst, appearOnFor, isAppeared, isOpen, isListed, reappearOn, isPeriodDone, snapshotTask };
 })();
 window.DTCore = Core;
 
@@ -1044,7 +1133,10 @@ function save() {
 /* ===== 介面 ===== */
 const $ = (id) => document.getElementById(id);
 let view = 'home', allFilter = 'open', editingId = null, editingMonthDay = null, calY, calM, calSel, pendingImport = null;
-const today = () => Core.todayStr(new Date());
+function today() {
+  if (typeof window.DT_TODAY === 'string' && Core.isValidDate(window.DT_TODAY)) return window.DT_TODAY;
+  return Core.todayStr(new Date());
+}
 
 function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
 function btn(text, act, extra) { const b = el('button', extra || '', text); b.type = 'button'; b.dataset.act = act; return b; }
@@ -1073,8 +1165,17 @@ function renderTask(t, td) {
   li.appendChild(meta);
   if (t.note) li.appendChild(el('p', 'note', t.note));
   const act = el('div', 'task-actions');
-  if (t.done) act.appendChild(btn('↩ 取消完成', 'undone'));
-  else {
+  if (t.done) {
+    const doneBtn = btn('✔ 已完成', 'done-idle', 'btn-done');
+    doneBtn.disabled = true;
+    doneBtn.setAttribute('aria-disabled', 'true');
+    act.appendChild(doneBtn);
+    const appear = Core.reappearOn(state.tasks, t);
+    if (appear && td < appear) act.appendChild(el('span', 'reappear-hint', '本期已完成，' + Core.fmtMd(appear) + ' 再出現'));
+    const undoBtn = btn('↩ 復原', 'undone', 'btn-undo');
+    undoBtn.setAttribute('aria-label', '復原「' + t.title + '」');
+    act.appendChild(undoBtn);
+  } else {
     act.appendChild(btn('✔ 完成', 'done', 'primary'));
     act.appendChild(btn(t.pinned ? '取消置頂' : '置頂', 'pin'));
     act.appendChild(btn('編輯', 'edit'));
@@ -1099,7 +1200,7 @@ function fill(listId, emptyId, items, td) {
 function render() {
   const td = today();
   $('todayLine').textContent = Core.fmtDate(td);
-  const open = Core.sortTasks(state.tasks.filter((t) => !t.done), td);
+  const open = Core.sortTasks(state.tasks.filter((t) => Core.isOpen(t, td)), td);
   const dueToday = open.filter((t) => t.due === td);
   const others = open.filter((t) => t.due !== td);
   fill('listToday', 'emptyToday', dueToday, td);
@@ -1107,6 +1208,11 @@ function render() {
   $('todayCount').textContent = dueToday.length + ' 項';
   const overN = others.filter((t) => t.due < td).length;
   $('openCount').textContent = others.length + ' 項' + (overN ? '（逾期 ' + overN + '）' : '');
+  const period = state.tasks.filter((t) => Core.isPeriodDone(state.tasks, t, td)).sort((a, b) => (b.doneAt || '') < (a.doneAt || '') ? -1 : 1);
+  const periodUl = $('listPeriod'); periodUl.textContent = '';
+  period.forEach((t) => periodUl.appendChild(renderTask(t, td)));
+  $('cardPeriod').hidden = period.length === 0;
+  $('periodCount').textContent = period.length ? period.length + ' 項' : '';
   const allItems = allFilter === 'open' ? open : state.tasks.filter((t) => t.done).sort((a, b) => (b.doneAt || '') < (a.doneAt || '') ? -1 : 1);
   fill('listAll', 'emptyAll', allItems, td);
   $('fOpen').setAttribute('aria-pressed', String(allFilter === 'open'));
@@ -1135,8 +1241,8 @@ function renderCal(td) {
   const n = Core.lastDay(calY, calM);
   for (let d = 1; d <= n; d++) {
     const ds = calY + '-' + String(calM).padStart(2, '0') + '-' + String(d).padStart(2, '0');
-    const items = state.tasks.filter((t) => t.due === ds);
-    const openN = items.filter((t) => !t.done).length;
+    const items = state.tasks.filter((t) => t.due === ds && Core.isListed(t, td));
+    const openN = items.filter((t) => Core.isOpen(t, td)).length;
     const over = openN > 0 && ds < td;
     const b = el('button', 'cal-day' + (ds === td ? ' is-today' : '') + (over ? ' has-over' : ''));
     b.type = 'button'; b.dataset.date = ds;
@@ -1147,7 +1253,7 @@ function renderCal(td) {
     g.appendChild(b);
   }
   $('calDayTitle').textContent = calSel ? Core.fmtDate(calSel) + ' 的任務' : '請點一天';
-  const dayItems = calSel ? Core.sortTasks(state.tasks.filter((t) => t.due === calSel), td) : [];
+  const dayItems = calSel ? Core.sortTasks(state.tasks.filter((t) => t.due === calSel && Core.isListed(t, td)), td) : [];
   fill('listDay', 'emptyDay', dayItems, td);
 }
 
@@ -1269,19 +1375,57 @@ function onAction(e) {
     download('每日工作清單-' + safeName(t.title) + '.ics', Core.buildIcs([t], new Date()), 'text/calendar;charset=utf-8');
   }
 }
+const recentCompleteAt = Object.create(null);
+function tooSoon(id) { return Date.now() - (recentCompleteAt[id] || 0) < 1000; }
+function markCompleteTap(id, nextId) {
+  const n = Date.now();
+  recentCompleteAt[id] = n;
+  if (nextId) recentCompleteAt[nextId] = n;
+}
+let toastTimer = null, toastTaskId = null;
+function hideUndoToast() {
+  if (toastTimer) { clearTimeout(toastTimer); toastTimer = null; }
+  toastTaskId = null;
+  const box = $('undoToast');
+  if (box) box.hidden = true;
+}
+function showUndoToast(t) {
+  hideUndoToast();
+  toastTaskId = t.id;
+  $('undoToastText').textContent = '已完成 ' + t.title;
+  $('undoToast').hidden = false;
+  toastTimer = setTimeout(hideUndoToast, 10000);
+}
 function toast(msg) { $('icsMsg').textContent = msg; }
 function completeTask(t) {
   if (!t || t.done) return;
+  if (tooSoon(t.id)) return;
+  if (!Core.isAppeared(t, today())) return;
   const nd = Core.nextDue(t);
   if (nd && !Core.isValidDate(nd) && !confirm('「' + t.title + '」的下一次會是 ' + nd + '，超過可用日期（2000-01-01～2100-12-31），所以不會再產生下一次，這個重複任務到這次結束。\n仍要標記完成嗎？')) return;
-  const r = Core.complete(state.tasks, t.id, new Date());
+  markCompleteTap(t.id, null);
+  const r = Core.complete(state.tasks, t.id, new Date(), today());
+  if (r.skipped) return;
+  if (r.next) markCompleteTap(t.id, r.next.id);
   state.tasks = r.tasks; save(); render();
-  if (r.next) toast('已完成，下一次：' + Core.fmtShort(r.next.due));
+  showUndoToast(t);
+  if (r.next && Core.isAppeared(r.next, today())) toast('已完成，下一次：' + Core.fmtShort(r.next.due));
+  else if (r.next && r.next.appearOn) toast('已完成，' + Core.fmtMd(r.next.appearOn) + ' 再出現');
 }
-function uncompleteTask(t) {
+function uncompleteTask(t, opts) {
   if (!t || !t.done) return;
+  delete recentCompleteAt[t.id];
+  opts = opts || {};
+  if (!opts.fromToast) {
+    const addedId = (typeof t.undoAddedId === 'string' && t.undoAddedId) ? t.undoAddedId : t.nextId;
+    const n = addedId ? state.tasks.find((x) => x.id === addedId) : null;
+    let msg = '確定要復原「' + t.title + '」嗎？會回到完成前的狀態。';
+    if (n && n.updatedAt && n.createdAt && n.updatedAt !== n.createdAt) msg += '\n下一次的任務已經改過，復原會刪掉那一筆。';
+    if (!confirm(msg)) return;
+  }
   const r = Core.uncomplete(state.tasks, t.id, new Date());
   if (!r.ok) { alert(r.reason); return; }
+  if (toastTaskId === t.id) hideUndoToast();
   state.tasks = r.tasks; save(); render();
 }
 
@@ -1315,8 +1459,8 @@ function renderWeek(td) {
   for (let i = 0; i < 7; i++) {
     const ds = Core.addDays(start, i);
     if (!Core.isValidDate(ds)) { box.appendChild(hidden(el('div', 'wk-day other'))); continue; }
-    const items = state.tasks.filter((t) => t.due === ds);
-    const over = ds < td && items.some((t) => !t.done);
+    const items = state.tasks.filter((t) => t.due === ds && Core.isListed(t, td));
+    const over = ds < td && items.some((t) => Core.isOpen(t, td));
     const b = el('button', 'wk-day' + (ds === td ? ' is-today' : '') + (items.length ? ' has-task' : '') + (over ? ' has-over' : ''));
     b.type = 'button'; b.dataset.date = ds; b.setAttribute('aria-pressed', String(ds === sel));
     const q = Core.parseYmd(ds);
@@ -1386,7 +1530,7 @@ function insertNowLine(box, secs) {
   box.appendChild(makeNowLine('div', hm));
 }
 function renderUpcoming(td) {
-  const list = state.tasks.filter((t) => !t.done && t.due >= td).sort((a, b) => a.due !== b.due ? (a.due < b.due ? -1 : 1) : Core.byTime(a, b, td)).slice(0, 10);
+  const list = state.tasks.filter((t) => Core.isOpen(t, td) && t.due >= td).sort((a, b) => a.due !== b.due ? (a.due < b.due ? -1 : 1) : Core.byTime(a, b, td)).slice(0, 10);
   const ul = $('upList'); ul.textContent = '';
   list.forEach((t) => {
     const li = el('li'); const b = el('button', 'ev-btn' + (t.due === td ? ' is-due' : '')); b.type = 'button'; b.dataset.date = t.due; b.dataset.id = t.id;
@@ -1398,7 +1542,7 @@ function renderUpcoming(td) {
 }
 function renderQuads(td) {
   const box = $('quads'); box.textContent = '';
-  const open = Core.sortTasks(state.tasks.filter((t) => !t.done), td);
+  const open = Core.sortTasks(state.tasks.filter((t) => Core.isOpen(t, td)), td);
   QUADS.forEach((Q) => {
     const items = open.filter((t) => Core.quadrant(t, td) === Q.k);
     const sec = el('section', 'quad quad-' + Q.k); sec.dataset.quad = Q.k;
@@ -1444,7 +1588,7 @@ function shiftWeek(n) {
 /* ===== 提醒 ===== */
 function remindItems() {
   const td = today();
-  return Core.sortTasks(state.tasks.filter((t) => !t.done && t.due <= td), td);
+  return Core.sortTasks(state.tasks.filter((t) => Core.isOpen(t, td) && t.due <= td), td);
 }
 function showReminder() {
   const items = remindItems();
@@ -1888,11 +2032,11 @@ function init() {
   $('fDue').addEventListener('change', syncRecurUi);
   $('fTitle').addEventListener('input', updateTitleCount);
   document.querySelectorAll('nav.bottom button').forEach((b) => b.addEventListener('click', () => setView(b.dataset.view)));
-  ['listToday', 'listOpen', 'listAll', 'listDay'].forEach((id) => { $(id).addEventListener('click', onAction); $(id).addEventListener('change', onAction); });
+  ['listToday', 'listOpen', 'listAll', 'listDay', 'listPeriod'].forEach((id) => { $(id).addEventListener('click', onAction); $(id).addEventListener('change', onAction); });
   $('fOpen').addEventListener('click', () => { allFilter = 'open'; render(); });
   $('fDone').addEventListener('click', () => { allFilter = 'done'; render(); });
   $('icsAllBtn').addEventListener('click', () => {
-    const list = Core.sortTasks(state.tasks.filter((t) => !t.done && t.exportIcs), today());
+    const list = Core.sortTasks(state.tasks.filter((t) => Core.isOpen(t, today()) && t.exportIcs), today());
     const m = $('icsMsg');
     if (!list.length) { m.className = 'msg bad'; m.textContent = '✖ 沒有勾選「匯出到日曆」的未完成任務'; return; }
     download('每日工作清單-日曆-' + stampName() + '.ics', Core.buildIcs(list, new Date()), 'text/calendar;charset=utf-8');
@@ -1936,12 +2080,25 @@ function init() {
   $('importReplace').addEventListener('click', importReplace);
   $('undoImportBtn').addEventListener('click', undoImport);
   document.addEventListener('visibilitychange', () => { if (!document.hidden) render(); });
+  $('undoToastBtn').addEventListener('click', () => {
+    const id = toastTaskId; if (!id) return;
+    const t = state.tasks.find((x) => x.id === id); if (!t) { hideUndoToast(); return; }
+    uncompleteTask(t, { fromToast: true });
+  });
   render();
   try { Sync.init(); } catch (e) { /* fix7：雲端同步啟動失敗，照樣用本機模式 */ }
   if ('serviceWorker' in navigator && location.protocol !== 'file:') navigator.serviceWorker.register('sw.js').catch(() => {});
   if (state.settings.popupOnOpen) showReminder();
   notifyOnOpen();
   if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
+  let lastTd = today();
+  setInterval(() => { const td = today(); if (td !== lastTd) { lastTd = td; render(); } }, 60000);
+  window.DTTest = {
+    getState: () => state,
+    setState: (s) => { state = s; },
+    setToday: (s) => { window.DT_TODAY = s; },
+    today, render, save, completeTask, uncompleteTask, hideUndoToast, showUndoToast
+  };
 }
 init();
 </script>

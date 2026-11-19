@@ -1,6 +1,6 @@
-/* 每日工作清單 service worker｜作者：帥｜GROK 輔助｜製作日期 2026-11-14 19:49｜修改日期 2026-11-15 22:52 */
+/* 每日工作清單 service worker｜作者：帥｜GROK 輔助｜製作日期 2026-11-14 19:49｜修改日期 2026-11-20 07:39 */
 'use strict';
-const CACHE = 'daily-tasks-20261114-1949-fix7';
+const CACHE = 'daily-tasks-20261114-1949-fix8';
 const APP = './GROK-每日工作清單-20261114-1949.html';
 const FILES = [APP, './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 /* fix7：Firebase SDK（固定版本 13.3.0）可以快取，讓離線時也開得起來；載不到也不影響安裝 */
